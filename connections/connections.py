@@ -1,4 +1,4 @@
-import os
+""" import os
 import boto3
 import MySQLdb
 
@@ -21,4 +21,4 @@ def connect_to_s3():
         aws_access_key_id=os.getenv("do_access_key_id"),
         aws_secret_access_key=os.getenv("do_secret_access_key")
         )
-    return s3
+    return s3 """
