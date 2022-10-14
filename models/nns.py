@@ -3,17 +3,17 @@ import tensorflow as tf
 from pathlib import Path
 from tensorflow import keras
 from utils.misc import default
-from utils.files.file_handler import PathHandler
+import utils.file_handler as fh
 
 
 class ConvolutionModel:
 
     def __init__(self, dataset_path: str | Path, checkpoint_path: str | Path, conv_layers: int, dense_layers: int, image_size: tuple) -> None:
-        self.__data_path = PathHandler.to_path(dataset_path)
-        self.__ckpt_path = PathHandler.to_path(checkpoint_path)
+        self.__data_path = fh.to_path(dataset_path)
+        self.__ckpt_path = fh.to_path(checkpoint_path)
         self.__image_size = image_size
         self.__train_data, self.__validation_data = ConvolutionModel.__get_split_data(self.__data_path, self.__image_size)
-        self.classes = PathHandler.get_subdir_names_from(dataset_path)
+        self.classes = fh.get_subdir_names_from(dataset_path)
         self.model = self.__get_model(len(self.classes), conv_layers, dense_layers)
 
     @staticmethod
@@ -50,7 +50,7 @@ class ConvolutionModel:
                 sequential_layers.append(keras.layers.Dense(2 ** (dense_layers - n) + 3))
         model = keras.Sequential(sequential_layers)
         model.compile(optimizer='adam', loss=keras.losses.SparseCategoricalCrossentropy(from_logits=True), metrics=['accuracy'])
-        model.save_weights(PathHandler.to_str(self.__ckpt_path).format(epoch=0))
+        model.save_weights(fh.to_str(self.__ckpt_path).format(epoch=0))
         return model
 
     def get_callbacks(self, batch_size: int) -> keras.callbacks.ModelCheckpoint:
@@ -64,10 +64,8 @@ class ConvolutionModel:
         return tf.train.latest_checkpoint(self.__ckpt_path)
 
     def predict_image(self, image_path: str or Path):
-        image = keras.utils.load_img(PathHandler.to_path(image_path), target_size=self.__image_size)
+        image = keras.utils.load_img(fh.to_path(image_path), target_size=self.__image_size)
         image_array = tf.expand_dims(keras.utils.img_to_array(image), 0)
         predictions = self.model.predict(image_array)
         score = tf.nn.softmax(predictions[0])
         return self.classes[np.argmax(score)], 100 * np.max(score)
-
-
