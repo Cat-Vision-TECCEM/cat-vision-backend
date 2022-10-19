@@ -19,7 +19,7 @@ class Store:
         self.number = None
         self.city = None
         self.password = None
-        load(params) if db else create(params)
+        self.load(params) if db else self.create(params)
         
 
 
@@ -30,7 +30,7 @@ class Store:
         self.street = params['street']
         self.number = params['number']
         self.city = params['city']
-        self.password = md5(params.password['password'].encode()).hexdigest()
+        self.password = md5(params['password'].encode()).hexdigest()
 
         try:
 
@@ -39,8 +39,9 @@ class Store:
                 (self.name, self.state, self.street, self.number, self.city, self.password),
                 True
             )
-
+           
         except Exception as e:  
+            
             return e
 
 
@@ -58,5 +59,12 @@ class Store:
         except Exception as e:
             return e
     
-    def get_store_products():
-        return 'HI'
+    @classmethod
+    def get_store_products(cls, id):
+        result = get(
+            ''' SELECT p.name, sp.quantity
+                FROM store_product sp, product p
+                WHERE sp.store_id = %s ''',
+            (id,)
+            )
+        return {'products': result}

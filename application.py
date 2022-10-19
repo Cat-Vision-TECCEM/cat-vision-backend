@@ -7,6 +7,7 @@
 from flask import Flask
 from flask_cors import CORS
 from dotenv import load_dotenv
+import os
 
 # Configuracion del backend
 load_dotenv()
@@ -19,9 +20,10 @@ def hello_there():
     return "General Kenobi", 200
 
 # Registro de blueprints
-
+from Global.Routes.Store import GLOBAL_STORE_BLUEPRINT
+application.register_blueprint(GLOBAL_STORE_BLUEPRINT, url_prefix='/store')
 # Configuraciones de la app
 
 if __name__ == "__main__":
-    application.run(debug=True)
+    application.run(debug=True, port = os.environ.get('FLASK_PORT'))
 
