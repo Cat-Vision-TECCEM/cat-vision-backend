@@ -61,11 +61,10 @@ def empty_dir(source: str | Path) -> None:
                 empty_dir(child)
 
 
-def clean_creation(path: str | Path) -> None:
+def clean_creation(path: str | Path) -> Path | None:
     path = to_path(path)
     if not path.exists():
         path.mkdir()
     else:
         empty_dir(path)
-
-
+    return path
