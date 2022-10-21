@@ -49,7 +49,8 @@ class Store:
         try:
 
             self.id = post(
-                '''INSERT INTO store(name, state, street, number, city, password) VALUES (%s, %s, %s, %s, %s, %s) RETURNING store_id''',
+                '''INSERT INTO store(name, state, street, number, city, password) VALUES (%s, %s, %s, %s, %s, 
+                %s) RETURNING store_id''',
                 (self.name, self.state, self.street, self.number, self.city, self.password),
                 True
             )

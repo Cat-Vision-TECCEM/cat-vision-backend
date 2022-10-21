@@ -5,6 +5,7 @@
     Last update: 18/10/2022
 """
 
+
 class CompanyUser:
 
     def __init__():
