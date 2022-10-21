@@ -8,7 +8,28 @@ import re
 from flask import request
 from Global.Classes.Store import Store
 
+
 def create_store():
+    """
+    Controller for the route /create
+
+    Method:
+    * POST
+
+    Parameters:
+    * name: name of the store
+    * state: state where the store is located
+    * street: street where the store is located
+    * number: street number where the store is located
+    * city: city where store is located
+    * password: login password
+
+    Format:
+    * JSON
+
+    Returns:
+    * An exception or a 200 status
+    """
     try:
         params = {
             'name': request.json.get('name'),
@@ -24,14 +45,51 @@ def create_store():
     except Exception as e:
         return str(e), 400
 
+
 def get_store_products():
+    """
+    Controller for the route /getProducts
+
+    Method:
+    * GET
+
+    Parameters:
+    * name: name of the store
+    * state: state where the store is located
+    * street: street where the store is located
+    * number: street number where the store is located
+    * city: city where store is located
+    * password: login password
+
+    Format:
+    * QueryParams
+
+    Returns:
+    * An exception or a 200 status
+    """
     try:
         store_id = request.args.get('store_id')
         return Store.get_store_products(store_id)
     except Exception as e:
         return str(e), 400
 
+
 def get_all():
+    """
+    Controller for the route /getAll
+
+    Method:
+    * GET
+
+    Parameters:
+    * Not required
+
+    Format:
+    * QueryParams
+
+    Returns:
+    * An exception or a 200 status
+    """
     try:
         return Store.get_all()
     except Exception as e:
