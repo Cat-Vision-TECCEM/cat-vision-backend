@@ -30,3 +30,9 @@ def get_store_products():
         return Store.get_store_products(store_id)
     except Exception as e:
         return str(e), 400
+
+def get_all():
+    try:
+        return Store.get_all()
+    except Exception as e:
+        return str(e), 400

@@ -15,6 +15,11 @@ def createStore():
 @GLOBAL_STORE_BLUEPRINT.route('/getProducts', methods = ['GET'])
 def getStoreProducts():
     return c.get_store_products()
+
+@GLOBAL_STORE_BLUEPRINT.route('/getAll', methods = ['GET'])
+def getAll():
+    return c.get_all()
+
 """
 estadisticas para todos
 - los mas comprandos

@@ -20,10 +20,24 @@ class Store:
         self.city = None
         self.password = None
         self.load(params) if db else self.create(params)
-        
-
 
     def create(self, params):
+
+        """
+        Method that creates a new store into the database using params
+
+        Parameters:
+        * name: name of the store
+        * state: state where the store is located
+        * street: street where the store is located
+        * number: street number where the store is located
+        * city: city where store is located
+        * password: login password
+
+        Returns:
+
+        """
+
         from hashlib import md5
         self.name = params['name']
         self.state = params['state']
@@ -39,13 +53,23 @@ class Store:
                 (self.name, self.state, self.street, self.number, self.city, self.password),
                 True
             )
-           
-        except Exception as e:  
-            
+
+        except Exception as e:
+
             return e
 
-
     def load(self, params):
+
+        """
+        Method that loads a store from the database using params
+
+        Parameters:
+        * id: id of the store
+
+        Returns:
+
+        """
+
         self.id = params['id']
 
         try:
@@ -58,13 +82,58 @@ class Store:
 
         except Exception as e:
             return e
-    
+
     @classmethod
     def get_store_products(cls, id):
+
+        """
+        Class method that loads the available products in a store
+
+        Parameters:
+        * id: id of the store
+
+        Returns:
+
+        """
+
         result = get(
             ''' SELECT p.name, sp.quantity
                 FROM store_product sp, product p
                 WHERE sp.store_id = %s ''',
             (id,)
-            )
-        return {'products': result}
+        )
+        return {
+            'products': result
+        }
+
+    @classmethod
+    def get_all(cls):
+
+        """
+        Class method that loads the address and the name of all stores from the database
+
+        Parameters:
+
+
+        Returns:
+        * A list with a dictionary containing the store name, address and id
+
+        """
+
+        result = get("""
+            SELECT name,state,street,number,city, store_id FROM store
+        """, ())
+
+        stores = []
+
+        for i in result:
+            dict = {
+                'store': i[0],
+                'address': i[2] + ' ' + i[3] + ', ' + i[4] + ', ' + i[1],
+                'id': i[5]
+
+            }
+            stores.append(dict)
+        return {
+            'stores': stores
+        }
