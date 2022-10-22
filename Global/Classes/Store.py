@@ -11,7 +11,7 @@ from venv import create
 
 class Store:
 
-    def __init__(self, params, db=True):
+    def __init__(self, params, load=True):
         self.id = None
         self.name = None
         self.state = None
@@ -19,7 +19,7 @@ class Store:
         self.number = None
         self.city = None
         self.password = None
-        self.load(params) if db else self.create(params)
+        self.load(params) if load else self.create(params)
 
     def create(self, params):
 
@@ -98,11 +98,13 @@ class Store:
         """
 
         result = get(
-            ''' SELECT p.name, sp.quantity
-                FROM store_product sp, product p
-                WHERE sp.store_id = %s ''',
+            ''' SELECT name
+                FROM store_product 
+                LEFT JOIN product ON store_product.product_id = product.product_id
+                WHERE store_id = %s ''',
             (id,)
         )
+        print(result)
         return {
             'products': result
         }

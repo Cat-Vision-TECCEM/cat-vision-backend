@@ -39,7 +39,6 @@ def create_store():
             'city': request.json.get('city'),
             'password': request.json.get('password')
         }
-        print(params)
         store = Store(params, False)
         return f'Store {store.name} created', 200
     except Exception as e:
@@ -54,12 +53,7 @@ def get_store_products():
     * GET
 
     Parameters:
-    * name: name of the store
-    * state: state where the store is located
-    * street: street where the store is located
-    * number: street number where the store is located
-    * city: city where store is located
-    * password: login password
+    * store_id: int - the id of the store we want to get the products
 
     Format:
     * QueryParams
@@ -74,7 +68,7 @@ def get_store_products():
         return str(e), 400
 
 
-def get_all():
+def get_all_stores():
     """
     Controller for the route /getAll
 

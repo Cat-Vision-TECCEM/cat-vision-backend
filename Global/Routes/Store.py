@@ -59,10 +59,10 @@ def getStoreProducts():
     return c.get_store_products()
 
 
-@GLOBAL_STORE_BLUEPRINT.route('/getAll', methods=['GET'])
-def getAll():
+@GLOBAL_STORE_BLUEPRINT.route('/getAllStores', methods=['GET'])
+def getAllStores():
     """
-    Route used to create a new store in the databse
+    Route used to load all the stores from the databse
 
     Method:
     * GET
@@ -76,7 +76,26 @@ def getAll():
     Returns:
     * An exception or a 200 status
     """
-    return c.get_all()
+    return c.get_all_stores()
+
+@GLOBAL_STORE_BLUEPRINT.route('/getAllProducts', methods=['GET'])
+def getAllProducts():
+    """
+    Route used to get
+
+    Method:
+    * GET
+
+    Parameters:
+    * Not required
+
+    Format:
+    * QueryParams
+
+    Returns:
+    * An exception or a 200 status
+    """
+    return c.get_all_products()
 
 
 """
