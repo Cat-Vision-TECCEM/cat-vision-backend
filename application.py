@@ -21,9 +21,46 @@ def hello_there():
 
 # Registro de blueprints
 from Global.Routes.Store import GLOBAL_STORE_BLUEPRINT
+from Global.Routes.Order import GLOBAL_ORDER_BLUEPRINT
 application.register_blueprint(GLOBAL_STORE_BLUEPRINT, url_prefix='/store')
+application.register_blueprint(GLOBAL_ORDER_BLUEPRINT, url_prefix='/order')
 # Configuraciones de la app
 
 if __name__ == "__main__":
     application.run(debug=True, port = os.environ.get('FLASK_PORT'))
 
+#TODO:
+"""
+estadisticas para todos
+- los mas comprandos
+- los menos comprados
+
+estadísticas por tienda
+- los productos
+
+
+estadisticas gobales, estado
+la tiendita que mas compra
+la tiendita que menos compra
+
+-------------------
+
+Ruta que devuelva todas las tienditas 
+- toda la informacion
+
+Ruta que devuelve los pedidos ordenados en orden descendente para 
+
+Ruta para crear pedido 
+
+IMPORTANTE
+
+RUTA PARA ESTADISTICAS DE LA TIENDA
+- los productos de la tienda separados en agotados, existentes
+- los productos 3 productos mas comprados en un intervalo de fechas 
+- grafica de linea con el historico de compras con intervalos de temporalidad de 1 mes
+
+DB 
+
+Añadir la columna status de la orden
+va a tener "fulfilled" o "active"
+"""
