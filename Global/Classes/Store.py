@@ -131,7 +131,8 @@ class Store:
 
         for i in result:
             dict = {
-                'store': i[0],
+                'value': i[0],
+                'label': i[0],
                 'address': i[2] + ' ' + i[3] + ', ' + i[4] + ', ' + i[1],
                 'id': i[5]
 
