@@ -98,15 +98,23 @@ class Store:
         """
 
         result = get(
-            ''' SELECT p.name, p.image
+            ''' SELECT p.name, p.image, sp.in_stock
                 FROM store_product sp
                 LEFT JOIN product p ON sp.product_id = p.product_id
                 WHERE sp.store_id = %s  AND sp.in_stock = True''',
             (id,)
         )
         print(result)
+        res_list = []
+        for item in result:
+            res_dict = {
+                'name' : item[0],
+                'url' : item[1],
+                'stock': item[2]
+            }
+            res_list.append(res_dict)
         return {
-            'products': result
+            'products': res_list
         }
 
     @classmethod

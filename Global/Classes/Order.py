@@ -63,7 +63,7 @@ class Order:
             tupla = (f'{start_year}-{start_month}-01', f'{end_year}-{end_month}-01')
         else:
             import datetime
-            tupla = (str(datetime.date(int(start_year), int(start_month), 1)), str(datetime.date.today()))
+            tupla = (str(datetime.date(int(start_year), int(start_month), 1)), str(datetime.datetime.today()))
         try:
             if company_id is None:
                 tupla = ('2022-10-01', '2022-10-31')
