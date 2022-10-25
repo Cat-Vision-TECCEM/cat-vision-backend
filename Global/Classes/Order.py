@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 from Global.Utils.db import post, get
 
 
@@ -64,10 +66,9 @@ class Order:
         else:
             import datetime
             tupla = (str(datetime.date(int(start_year), int(start_month), 1)),
-                     str(datetime.date(datetime.date.year, datetime.date.month+1, 1)))
+                     str(datetime.date.today() + timedelta(days=1)))
         try:
             if company_id is None:
-                #tupla = ('2022-10-01', '2022-10-31')
                 sales = get('''SELECT products, total FROM public.order WHERE datetime BETWEEN %s AND %s ''', tupla)
                 print(sales)
             else:
