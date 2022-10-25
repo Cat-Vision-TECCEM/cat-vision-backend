@@ -8,6 +8,7 @@ class Order:
         self.store_id = None
         self.products = None
         self.datetime = None
+        self.status = None
 
         self.load(params) if load else self.create(params)
 
@@ -16,7 +17,7 @@ class Order:
 
         try:
 
-            self.id, self.company_id, self.store_id, self.products, self.datetime = get(
+            self.id, self.company_id, self.store_id, self.products, self.datetime, self.status = get(
                 '''SELECT * FROM order WHERE order_id = %s ''',
                 (self.id,),
                 False
@@ -42,4 +43,36 @@ class Order:
         except Exception as e:
 
             return e
-        
+
+    @classmethod
+    def get_sales_product(self, params):
+        company_id = params.get('COMPANY_ID')
+        start_month = params['start_month']
+        start_year = params['start_year']
+        end_month = params.get('end_month')
+        end_year = params.get('end_year')
+        process = None
+
+        def process_products(productos, company = True):
+            if company:
+                pass
+            else:
+                pass
+        # Comprobamos si recibimos la fecha de termina
+        if end_year is not None:
+            tupla = (f'{start_year}-{start_month}-01', f'{end_year}-{end_month}-01')
+        else:
+            import datetime
+            tupla = (datetime.date(int(start_year), int(start_month), 1), datetime.date.today())
+        try:
+            if company_id is None:
+                sales = get('''SELECT products, total FROM public.order WHERE datetime BETWEEN %s AND %s ''', tupla)
+                print(sales)
+            else:
+                sales = get('''SELECT products, total FROM public.order WHERE datetime BETWEEN %s AND %s AND company_id = %s''',
+                            tupla + (company_id,))
+            return '"('
+        except Exception as e:
+            return e
+
+        return sales

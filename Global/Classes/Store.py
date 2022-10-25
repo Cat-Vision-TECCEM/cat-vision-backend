@@ -98,10 +98,10 @@ class Store:
         """
 
         result = get(
-            ''' SELECT name
-                FROM store_product 
-                LEFT JOIN product ON store_product.product_id = product.product_id
-                WHERE store_id = %s ''',
+            ''' SELECT p.name, p.image
+                FROM store_product sp
+                LEFT JOIN product p ON sp.product_id = p.product_id
+                WHERE sp.store_id = %s  AND sp.in_stock = True''',
             (id,)
         )
         print(result)
@@ -131,8 +131,7 @@ class Store:
 
         for i in result:
             dict = {
-                'value': i[0],
-                'label': i[0],
+                'store': i[0],
                 'address': i[2] + ' ' + i[3] + ', ' + i[4] + ', ' + i[1],
                 'id': i[5]
 

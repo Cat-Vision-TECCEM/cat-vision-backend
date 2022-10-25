@@ -10,7 +10,7 @@ GLOBAL_ORDER_BLUEPRINT = Blueprint('GLOBAL_ORDER_BLUEPRINT', __name__)
 
 
 @GLOBAL_ORDER_BLUEPRINT.route('/create', methods=['POST'])
-def create_ordern():
+def create_order():
     """
     Route used to create a new order in the databse
 
@@ -31,68 +31,31 @@ def create_ordern():
     return c.create_order()
 
 
-@GLOBAL_ORDER_BLUEPRINT.route('/getOrders', methods=['GET'])
-def getStoreProducts():
+@GLOBAL_ORDER_BLUEPRINT.route('/getSalesProduct', methods=['GET'])
+def get_sales_product():
     """
-    Route to get all active orders
+    Route that obtains how many times a product has been ordered, the total of the ordered products and the total income
+    in a certain interval of time.
+
+    If a store_id is not given, then it is assumed that global statistics are requested.
+    If an end date is not given, then it is assumed that the desired end date is the actual date.
 
     Method:
     * GET
 
     Parameters:
-    * name: name of the store
-    * state: state where the store is located
-    * street: street where the store is located
-    * number: street number where the store is located
-    * city: city where store is located
-    * password: login password
-
-    Format:
-    * QueryParams
+    * store_id (optional)
+    * start_month
+    * start_year
+    * end_month(optional)
+    * end_year(optional)
 
     Returns:
-    * An exception or a 200 status
+    * A JSON containing the requested information or an exception
     """
-    return c.get_store_products()
+    return c.get_sales_product()
 
 
-@GLOBAL_ORDER_BLUEPRINT.route('/getAllStores', methods=['GET'])
-def getAllStores():
-    """
-    Route used to load all the stores from the databse
-
-    Method:
-    * GET
-
-    Parameters:
-    * Not required
-
-    Format:
-    * QueryParams
-
-    Returns:
-    * An exception or a 200 status
-    """
-    return c.get_all_stores()
-
-@GLOBAL_ORDER_BLUEPRINT.route('/getAllProducts', methods=['GET'])
-def getAllProducts():
-    """
-    Route used to get
-
-    Method:
-    * GET
-
-    Parameters:
-    * Not required
-
-    Format:
-    * QueryParams
-
-    Returns:
-    * An exception or a 200 status
-    """
-    return c.get_all_products()
 
 
 """
@@ -111,7 +74,7 @@ la tiendita que menos compra
 -------------------
 
 Ruta que devuelva todas las tienditas 
-- toda la informacion
+- toda la informacion --> HECHO
 
 Ruta que devuelve los pedidos ordenados en orden descendente para 
 
