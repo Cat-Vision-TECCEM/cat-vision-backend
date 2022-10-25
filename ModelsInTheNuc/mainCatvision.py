@@ -25,8 +25,3 @@ if __name__ == "__main__":
     print(jason)
 
 
-    predictionDetectron2(imageName)
-    jason = prediction()
-    yayhijomuerde = bytes(str(jason),"utf-8")
-
-
