@@ -101,7 +101,7 @@ class Store:
             ''' SELECT p.name, p.image, sp.in_stock
                 FROM store_product sp
                 LEFT JOIN product p ON sp.product_id = p.product_id
-                WHERE sp.store_id = %s  AND sp.in_stock = True''',
+                WHERE sp.store_id = %s''',
             (id,)
         )
         print(result)
