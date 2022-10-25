@@ -1,6 +1,11 @@
 from flask import request
 from Global.Classes.Order import Order
-
+"""
+    Script that handles the received requests
+    Authors: David Rodriguez Fragoso, Erick Hernandez Silva
+    Created: 18/10/2022
+    Last update: 18/10/2022
+"""
 
 def create_order():
     try:
