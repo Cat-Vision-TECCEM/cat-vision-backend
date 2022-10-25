@@ -12,7 +12,8 @@ def create_order():
         params = {
             'company_id': request.json.get('company_id'),
             'store_id': request.json.get('store_id'),
-            'products': request.json.get('products')
+            'products': request.json.get('products'),
+            'total': request.json.get('total')
         }
         order = Order(params, False)
         return f'Order {order.id} created', 200

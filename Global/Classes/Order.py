@@ -1,3 +1,4 @@
+import json
 from datetime import timedelta
 
 from Global.Utils.db import post, get
@@ -11,6 +12,7 @@ class Order:
         self.products = None
         self.datetime = None
         self.status = None
+        self.total = None
 
         self.load(params) if load else self.create(params)
 
@@ -19,7 +21,7 @@ class Order:
 
         try:
 
-            self.id, self.company_id, self.store_id, self.products, self.datetime, self.status = get(
+            self.id, self.company_id, self.store_id, self.products, self.datetime, self.status, self.total = get(
                 '''SELECT * FROM order WHERE order_id = %s ''',
                 (self.id,),
                 False
@@ -33,12 +35,13 @@ class Order:
         self.company_id = params['company_id']
         self.store_id = params['store_id']
         self.products = params['products']
+        self.total = params['total']
 
         try:
 
             self.id = post(
-                '''INSERT INTO order(company_id, store_id, products) VALUES (%s, %s, %s) RETURNING order_id''',
-                (self.company_id, self.store_id, self.products),
+                '''INSERT INTO public.order(company_id, store_id, products,total) VALUES (%s, %s, %s,%s) RETURNING order_id''',
+                (self.company_id, self.store_id, json.dumps(self.products), self.total),
                 True
             )
 
@@ -48,7 +51,7 @@ class Order:
 
     @classmethod
     def get_sales_product(self, params):
-        company_id = params.get('COMPANY_ID')
+        company_id = params.get('company_id')
         start_month = params['start_month']
         start_year = params['start_year']
         end_month = params.get('end_month')
@@ -56,13 +59,29 @@ class Order:
         process = None
 
         def process_products(orders, company = True):
-            orders = orders[0]
-
+            orders = orders
+            res_part_1 = {}
             if company:
                 for order in orders:
-                    pass
+                    res_part_1[order[0]] = {
+                        'total': order[2]
+                    }
+                    orders_products = order[1].split('@')
+
+                    res = json.loads(orders_products.pop(0))
+                    for products in orders_products:
+                        temp_dict = json.loads(products)
+                        keys = list(temp_dict.keys())
+                        values = list(temp_dict.values())
+                        for i in range(len(keys)):
+                            res[keys[i]] = res.get(keys[i], 0) + values[i]
+                    res_part_1[order[0]]['totals'] = res
+
+                return res_part_1
+
 
             else:
+
                 pass
 
 
@@ -80,7 +99,7 @@ class Order:
                 SUM(total) AS productos FROM public.order 
                 WHERE datetime BETWEEN %s AND %s GROUP BY 1''', tupla)
                 process = process_products(sales)
-                print(sales)
+                return process
             else:
                 #sales = get('''SELECT products, total, datetime FROM public.order WHERE datetime BETWEEN %s AND %s AND company_id = %s''',
                             #tupla + (company_id,))
