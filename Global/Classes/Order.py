@@ -55,11 +55,17 @@ class Order:
         end_year = params.get('end_year')
         process = None
 
-        def process_products(productos, company = True):
+        def process_products(orders, company = True):
+            orders = orders[0]
+
             if company:
-                pass
+                for order in orders:
+                    pass
+
             else:
                 pass
+
+
         # Comprobamos si recibimos la fecha de termina
         if end_year is not None:
             tupla = (f'{start_year}-{start_month}-01', f'{end_year}-{end_month}-01')
@@ -69,13 +75,20 @@ class Order:
                      str(datetime.date.today() + timedelta(days=1)))
         try:
             if company_id is None:
-                sales = get('''SELECT products, total FROM public.order WHERE datetime BETWEEN %s AND %s ''', tupla)
+                #sales = get('''SELECT products, total, datetime FROM public.order WHERE datetime BETWEEN %s AND %s ''', tupla)
+                sales = get('''SELECT DATE_PART('month',datetime::date) AS mes, string_agg(products::text, '@'), 
+                SUM(total) AS productos FROM public.order 
+                WHERE datetime BETWEEN %s AND %s GROUP BY 1''', tupla)
+                process = process_products(sales)
                 print(sales)
             else:
-                sales = get('''SELECT products, total FROM public.order WHERE datetime BETWEEN %s AND %s AND company_id = %s''',
-                            tupla + (company_id,))
-            return '"('
+                #sales = get('''SELECT products, total, datetime FROM public.order WHERE datetime BETWEEN %s AND %s AND company_id = %s''',
+                            #tupla + (company_id,))
+                sales = get('''SELECT DATE_PART('month',datetime::date) AS mes, string_agg(products::text, '@'), 
+                                SUM(total) AS productos FROM public.order 
+                                WHERE datetime BETWEEN %s AND %s AND company_id = %s GROUP BY 1''', tupla+(company_id,))
+                process = process_products(sales, False)
+
+            return 'a'
         except Exception as e:
             return e
-
-        return sales
