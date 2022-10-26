@@ -1,12 +1,17 @@
+from threading import Thread
 from CatVisionDetectron import *
 from ModeloJoe.modeloJoe import *
 import uuid
 import cv2
+import requests
+import json
 import time
+
+url = "http://IP:PORT/nuc/sendData"
 
 if __name__ == "__main__":
     #time.sleep(1800)
-    cap = cv2.VideoCapture(1,cv2.CAP_DSHOW) 
+    cap = cv2.VideoCapture(0,cv2.CAP_DSHOW) 
 
     while(True):
         ret,frame = cap.read() 
@@ -21,12 +26,9 @@ if __name__ == "__main__":
 
     predictionDetectron2(imageName)
     jason = prediction()
-    yayhijomuerde = bytes(str(jason),"utf-8")
+    yayhijomuerde = bytes(json.dumps(jason), "utf-8")
     print(jason)
+    print(yayhijomuerde)
 
-
-    predictionDetectron2(imageName)
-    jason = prediction()
-    yayhijomuerde = bytes(str(jason),"utf-8")
-
-
+    res = requests.post(url, yayhijomuerde)
+    print(res.text)

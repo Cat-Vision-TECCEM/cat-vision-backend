@@ -4,6 +4,7 @@ import cv2
 import os
 import numpy as np
 import json
+import uuid
 import matplotlib.pyplot as plt
 from detectron2.structures import BoxMode
 from detectron2.data import DatasetCatalog, MetadataCatalog
@@ -111,7 +112,7 @@ def predictionDetectron2(imagen):
     img = PIL.Image.open(imagenleer).convert('RGB') 
     boxes = list(boxes)
     for i in range(len(boxes)):
-        name = "skusForProcess/" + str(i) + "predict.jpg"
+        name = "temp/" + str(uuid.uuid4()) + "predict.jpg"
         box = boxes[i].detach().cpu().numpy()
         # Crop the PIL image using predicted box coordinates
         crop_object(img, box, name)
@@ -134,8 +135,3 @@ def crop_object(image, box, name):
 
   crop_img = image.crop((int(x_top_left), int(y_top_left), int(x_bottom_right), int(y_bottom_right)))
   crop_img.save(name)
-
-
-
-
-
