@@ -7,7 +7,7 @@ from utils.train_test_split import split_data
 
 if __name__ == '__main__':
     # Define paths
-    img_path = Path("models")
+    img_path = Path("AllModels")
     # Image processing paths
     original_img_path = img_path.joinpath("temp")
     processed_img_path = img_path.joinpath("temp_processed")
@@ -15,7 +15,7 @@ if __name__ == '__main__':
     train_path = processed_img_path.joinpath("training")
     validation_path = processed_img_path.joinpath("validation")
     # Model output path
-    output_path = Path("models")
+    output_path = Path("AllModels")
     checkpoint_path = output_path.joinpath("checkpoints")
     # Resize images
     IMG_HEIGHT = 224
