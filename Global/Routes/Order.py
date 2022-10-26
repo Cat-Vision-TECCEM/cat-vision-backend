@@ -56,6 +56,24 @@ def get_sales_product():
     return c.get_sales_product()
 
 
+@GLOBAL_ORDER_BLUEPRINT.route('/getOrders', methods=['GET'])
+def getActiveOrders():
+    """
+    Route that gets an store id and a company id and returns all the active orders. It returns the products of the
+     order, the date, and the total to pay
+
+
+    Method:
+    * GET
+
+    Parameters:
+    * store_id (optional)
+
+    Returns:
+    * A JSON containing the requested information or an exception
+    """
+    return c.get_sales_product()
+
 
 
 """

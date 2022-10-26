@@ -22,12 +22,14 @@ def hello_there():
 # Registro de blueprints
 from Global.Routes.Store import GLOBAL_STORE_BLUEPRINT
 from Global.Routes.Order import GLOBAL_ORDER_BLUEPRINT
+from Global.Routes.NUC import GLOBAL_NUC_BLUEPRINT
 application.register_blueprint(GLOBAL_STORE_BLUEPRINT, url_prefix='/store')
 application.register_blueprint(GLOBAL_ORDER_BLUEPRINT, url_prefix='/order')
+application.register_blueprint(GLOBAL_NUC_BLUEPRINT, url_prefix='/nuc')
 # Configuraciones de la app
 
 if __name__ == "__main__":
-    application.run(debug=True, port = os.environ.get('FLASK_PORT'))
+    application.run(host= "0.0.0.0", debug=True, port = os.environ.get('FLASK_PORT'))
 
 #TODO:
 """

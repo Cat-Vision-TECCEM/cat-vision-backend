@@ -1,13 +1,19 @@
 from flask import request
 from Global.Classes.Order import Order
-
+"""
+    Script that handles the received requests
+    Authors: David Rodriguez Fragoso, Erick Hernandez Silva
+    Created: 18/10/2022
+    Last update: 18/10/2022
+"""
 
 def create_order():
     try:
         params = {
             'company_id': request.json.get('company_id'),
             'store_id': request.json.get('store_id'),
-            'products': request.json.get('products')
+            'products': request.json.get('products'),
+            'total': request.json.get('total')
         }
         order = Order(params, False)
         return f'Order {order.id} created', 200
