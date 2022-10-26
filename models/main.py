@@ -1,5 +1,6 @@
 from pathlib import Path
 from nns import Model
+from matplotlib import pyplot as plt
 import utils.image_processor as imp
 from utils.train_test_split import split_data
 
@@ -15,6 +16,7 @@ if __name__ == '__main__':
     validation_path = processed_img_path.joinpath("validation")
     # Model output path
     output_path = Path("models")
+    checkpoint_path = output_path.joinpath("checkpoints")
     # Resize images
     IMG_HEIGHT = 224
     IMG_WIDTH = 224
@@ -23,7 +25,15 @@ if __name__ == '__main__':
     # Get new model
     # split_data(train_path, validation_path)
     model = Model(processed_img_path, (IMG_HEIGHT, IMG_WIDTH))
-    print(len(model.classes))
-    history = model.train_model(12)
+    history = model.train_model(10)
+    # Plot accuracy
+    plt.plot(history.history['acc'])
+    plt.plot(history.history['val_acc'])
+    plt.title('Model Accuracy')
+    plt.xlabel('epoch')
+    plt.ylabel('accuracy')
+    plt.legend(['train', 'val'], loc='upper left')
+    plt.show()
+    # Save model
     model.model.save(output_path, include_optimizer=True)
 
