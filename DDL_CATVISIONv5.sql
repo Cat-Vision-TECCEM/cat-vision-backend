@@ -51,7 +51,7 @@ CREATE TABLE public.order
     store_id int NOT NULL,
     products varchar(1000) NOT NULL,
     datetime timestamp NOT NULL default current_timestamp,
-    status order_status default 'received',  
+    status order_status default 'active',
     CONSTRAINT orderID_pk PRIMARY KEY(order_id),
     CONSTRAINT orderCompanyForeing_fk FOREIGN KEY(company_id) REFERENCES public.company(company_id),
     CONSTRAINT orderStoreForeing_fk FOREIGN KEY(store_id) REFERENCES public.store(store_id)
