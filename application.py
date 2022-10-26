@@ -29,7 +29,7 @@ application.register_blueprint(GLOBAL_NUC_BLUEPRINT, url_prefix='/nuc')
 # Configuraciones de la app
 
 if __name__ == "__main__":
-    application.run(debug=True, port = os.environ.get('FLASK_PORT'))
+    application.run(host= "0.0.0.0", debug=True, port = os.environ.get('FLASK_PORT'))
 
 #TODO:
 """

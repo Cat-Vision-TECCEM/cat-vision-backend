@@ -9,8 +9,8 @@ import json
 def sendData():
     url = 'http://127.0.0.1:8080/nuc/sendData'
     jason = {
-        "4": 1,
-        "5": 5,
+        "7": 1,
+        "9": 5,
         "11": 3,
         "store_id": 3
     }
