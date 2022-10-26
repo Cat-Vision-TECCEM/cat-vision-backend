@@ -51,38 +51,46 @@ class Order:
 
     @classmethod
     def get_sales_product(self, params):
-        company_id = params.get('company_id')
+        store_id = params.get('store_id')
         start_month = params['start_month']
         start_year = params['start_year']
         end_month = params.get('end_month')
         end_year = params.get('end_year')
         process = None
 
-        def process_products(orders, company = True):
+        def process_products(orders):
             orders = orders
             res_part_1 = {}
-            if company:
-                for order in orders:
-                    res_part_1[order[0]] = {
-                        'total': order[2]
-                    }
-                    orders_products = order[1].split('@')
+            res_part_totals = {
+                'total_earns': 0,
+                'totals_products': {}
+            }
 
-                    res = json.loads(orders_products.pop(0))
-                    for products in orders_products:
-                        temp_dict = json.loads(products)
-                        keys = list(temp_dict.keys())
-                        values = list(temp_dict.values())
-                        for i in range(len(keys)):
-                            res[keys[i]] = res.get(keys[i], 0) + values[i]
-                    res_part_1[order[0]]['totals'] = res
+            for order in orders:
+                res_part_1[order[0]] = {
+                    'total': order[2]
+                }
+                res_part_totals['total_earns'] += order[2]
+                orders_products = order[1].split('@')
 
-                return res_part_1
+                res = json.loads(orders_products.pop(0))
+                for i in range(len(list(res.keys()))):
+                    res_part_totals['totals_products'][list(res.keys())[i]] = res_part_totals['totals_products'].get(list(res.keys())[i],0) + list(res.values())[i]
 
 
-            else:
+                for products in orders_products:
+                    temp_dict = json.loads(products)
+                    keys = list(temp_dict.keys())
+                    values = list(temp_dict.values())
+                    for i in range(len(keys)):
+                        res[keys[i]] = res.get(keys[i], 0) + values[i]
+                        res_part_totals['totals_products'][keys[i]] = res_part_totals['totals_products'].get(keys[i], 0) + values[i]
 
-                pass
+                res_part_1[order[0]]['totals'] = res
+
+            res_part_1[0] = res_part_totals
+            from flask import jsonify
+            return res_part_1
 
 
         # Comprobamos si recibimos la fecha de termina
@@ -93,7 +101,7 @@ class Order:
             tupla = (str(datetime.date(int(start_year), int(start_month), 1)),
                      str(datetime.date.today() + timedelta(days=1)))
         try:
-            if company_id is None:
+            if store_id is None:
                 #sales = get('''SELECT products, total, datetime FROM public.order WHERE datetime BETWEEN %s AND %s ''', tupla)
                 sales = get('''SELECT DATE_PART('month',datetime::date) AS mes, string_agg(products::text, '@'), 
                 SUM(total) AS productos FROM public.order 
@@ -105,9 +113,9 @@ class Order:
                             #tupla + (company_id,))
                 sales = get('''SELECT DATE_PART('month',datetime::date) AS mes, string_agg(products::text, '@'), 
                                 SUM(total) AS productos FROM public.order 
-                                WHERE datetime BETWEEN %s AND %s AND company_id = %s GROUP BY 1''', tupla+(company_id,))
-                process = process_products(sales, False)
+                                WHERE datetime BETWEEN %s AND %s AND company_id = %s GROUP BY 1''', tupla+(store_id,))
+                process = process_products(sales)
 
-            return 'a'
+            return process
         except Exception as e:
             return e
