@@ -46,7 +46,7 @@ class Model:
         return model
 
     def train_model(self, epochs: int):
-        history = self.model.fit_generator(self.__train_data, validation_data=self.__test_data, steps_per_epoch=50, epochs=epochs)
+        history = self.model.fit(self.__train_data, validation_data=self.__test_data, steps_per_epoch=50, epochs=epochs)
         return history
 
     def predict_image(self, image_path: str | Path):
