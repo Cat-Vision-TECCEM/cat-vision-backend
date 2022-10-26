@@ -1,20 +1,29 @@
 from pathlib import Path
 from nns import Model
 import utils.image_processor as imp
+from utils.train_test_split import split_data
 
 
 if __name__ == '__main__':
     # Define paths
-    img_path = Path("models").joinpath("temp")
+    img_path = Path("models")
     # Image processing paths
-    original_img_path = img_path.joinpath("ciel_600ml")
+    original_img_path = img_path.joinpath("temp")
     processed_img_path = img_path.joinpath("temp_processed")
+    # Training path and validation path
+    train_path = processed_img_path.joinpath("training")
+    validation_path = processed_img_path.joinpath("validation")
     # Model output path
     output_path = Path("models")
     # Resize images
     IMG_HEIGHT = 224
     IMG_WIDTH = 224
-    imp.resize_images_recursive(original_img_path, processed_img_path, IMG_HEIGHT, IMG_WIDTH)
+    # imp.resize_images_recursive(processed_img_path, processed_img_path, IMG_HEIGHT, IMG_WIDTH)
+    # imp.color_jitter_dir(original_img_path, processed_img_path)
     # Get new model
-    """ model = Model(processed_img_path, (IMG_HEIGHT, IMG_WIDTH))
-    model.model.save(output_path, include_optimizer=True) """
+    # split_data(train_path, validation_path)
+    model = Model(processed_img_path, (IMG_HEIGHT, IMG_WIDTH))
+    print(len(model.classes))
+    history = model.train_model(12)
+    model.model.save(output_path, include_optimizer=True)
+

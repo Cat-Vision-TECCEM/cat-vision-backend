@@ -32,7 +32,7 @@ def resize_images_in(source_dir: str | Path, output_dir: str | Path, height: int
 
 
 def modify_contrast(image) -> np.uint8:
-    contrast = random.randint(40, 100)
+    contrast = random.randint(1, 20)
     brightness = 10
     dummy = np.int16(image)
     dummy = dummy * (contrast / 127 + 1) - contrast + brightness
@@ -65,9 +65,10 @@ def color_jitter_dir(source_dir: str | Path, output_dir: str | Path) -> None:
     for child in source_dir.rglob('*'):
         if child.is_file():
             output_name = f"{child.with_suffix('').name}_cjit{child.suffix}"
+            output_path = fh.to_path(output_dir).joinpath(child.parent.name, output_name)
             image = cv2.imread(fh.to_str(child))
-            alteration_value = np.random.choice(np.array([-50, -40, -30, 30, 40, 50]))
+            alteration_value = np.random.choice(np.array([-10, -8, -5, 5, 8, 10]))
             hsv_values = modify_hsv(cv2.cvtColor(image, cv2.COLOR_BGR2HSV), alteration_value)
             new_image = cv2.cvtColor(hsv_values, cv2.COLOR_HSV2BGR)
             new_image = modify_contrast(new_image)
-            cv2.imwrite(fh.to_path(output_dir).joinpath(output_name))
+            cv2.imwrite(fh.to_str(output_path), new_image)
