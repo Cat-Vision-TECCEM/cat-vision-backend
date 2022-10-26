@@ -14,8 +14,8 @@ def sendData():
         import json
         received_json = request.data.decode('utf-8')
         info = json.loads(received_json)
-        print(info)
-        return 'Information received', 200
+        return NUC.update_store_items(info)
+
 
     except Exception as e:
         return str(e), 400
