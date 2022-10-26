@@ -119,3 +119,32 @@ class Order:
             return process
         except Exception as e:
             return e
+
+    @classmethod
+    def get_active_orders(cls, params):
+        store_id = params['store_id']
+        company_id = params['company_id']
+        ordenes = []
+        if store_id is not None:
+            try:
+                result = get('''SELECT products, datetime, total FROM public.order WHERE company_id = %s AND store_id = %s AND status = 'active' ''', (company_id, store_id))
+            except Exception as e:
+                return str(e), 400
+        else:
+            try:
+                result = get('''SELECT products, datetime, total FROM public.order WHERE company_id = %s and status = 'active' ''', company_id)
+            except Exception as e:
+                return str(e), 400
+            print(result)
+        for orden in result:
+            res_dict = {
+                'products': orden[0],
+                'date': orden[1],
+                'total': orden[2]
+            }
+            ordenes.append(res_dict)
+        return {
+            'ordenes': ordenes
+        }
+
+

@@ -34,3 +34,14 @@ def get_sales_product():
         return Order.get_sales_product(params)
     except Exception as e:
         return str(e), 400
+
+
+def get_active_orders():
+    try:
+        params = {
+            'store_id': request.args.get('store_id', None),
+            'company_id': request.args.get('company_id', None)
+        }
+        return Order.get_active_orders(params)
+    except Exception as e:
+        return str(e), 400
