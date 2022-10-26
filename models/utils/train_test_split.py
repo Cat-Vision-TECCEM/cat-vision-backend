@@ -3,6 +3,7 @@ from pathlib import Path
 import random
 import utils.file_handler as fh
 
+
 def split_data(source_dir: str | Path, output_dir: str | Path):
     source_dir = fh.to_path(source_dir) 
     output_dir = fh.to_path(output_dir)
