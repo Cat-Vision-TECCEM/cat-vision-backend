@@ -1,3 +1,5 @@
+import random
+
 import pandas as pd
 COMPANY = 'Company'
 STORE = 'Store'
@@ -9,11 +11,10 @@ NUMBER_OF_STORES = 15
 def sendRequest(url, jason):
     import requests
     import json
+    headers = {'Content-type': 'application/json'}
 
-    # TEST SEND DATA
-    url = 'http://127.0.0.1:8080/nuc/sendData'
 
-    x = requests.post(url, jason)
+    x = requests.post(url, json.dumps(jason), headers=headers)
 
     print(x.text)
 
@@ -47,4 +48,18 @@ for i in range(0,NUMBER_OF_STORES):
 products_list = []
 
 for i in range(0,PRODUCTS.shape[0]):
-    url = 'http://127.0.0.1:8080/product'
+    url = 'http://127.0.0.1:8080/product/create'
+    json = {
+        'company_id': random.choice(companies_list),
+        'sku': PRODUCTS.iloc[i]['sku'],
+        'name':PRODUCTS.iloc[i]['name'],
+        'selling_price':PRODUCTS.iloc[i]['selling_price'],
+        'image':PRODUCTS.iloc[i]['image']
+    }
+    products_list.append(json)
+    sendRequest(url, json)
+
+
+"""# CREATE COMPANY_STORE
+for i in range(0, NUMBER_OF_COMPANIES):
+    url = """

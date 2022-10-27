@@ -1,10 +1,10 @@
 from flask import Blueprint
 from Global.Controllers import Product as c
 
-GLOBAL_ORDER_BLUEPRINT = Blueprint('GLOBAL_ORDER_BLUEPRINT', __name__)
+GLOBAL_PRODUCT_BLUEPRINT = Blueprint('GLOBAL_PRODUCT_BLUEPRINT', __name__)
 
 
-@GLOBAL_ORDER_BLUEPRINT.route('/create', methods=['POST'])
+@GLOBAL_PRODUCT_BLUEPRINT.route('/create', methods=['POST'])
 def create_product():
     """
     Route used to create a new product in the databse
@@ -28,8 +28,8 @@ def create_product():
     return c.create_product()
 
 
-@GLOBAL_ORDER_BLUEPRINT.route('/getProduct', methods=['GET'])
-def create_product():
+@GLOBAL_PRODUCT_BLUEPRINT.route('/getProduct', methods=['GET'])
+def get_product():
     """
     Route used to get the information of a product from the database
 
