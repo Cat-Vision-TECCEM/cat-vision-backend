@@ -69,3 +69,13 @@ class Product:
         except Exception as e:
             return e
 
+    @classmethod
+    def obtener_producto(cls,product_id):
+
+        try:
+            producto = get('''SELECT * FROM product WHERE product_id = %s''', (product_id,), False)
+            return {
+                'producto': producto
+            }
+        except Exception as e:
+            return e

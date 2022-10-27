@@ -23,5 +23,13 @@ def create_product():
     except Exception as e:
         return str(e), 400
 
-def load_product():
-    pass
+
+def get_product():
+
+    try:
+        params = {
+            'product_id': request.args.get('product_id')
+        }
+        return Product.obtener_producto(params)
+    except Exception as e:
+        return str(e), 400

@@ -26,3 +26,23 @@ def create_product():
     * An exception or a 200 status
     """
     return c.create_product()
+
+
+@GLOBAL_ORDER_BLUEPRINT.route('/getProduct', methods=['GET'])
+def create_product():
+    """
+    Route used to get the information of a product from the database
+
+    Method:
+    * GET
+
+    Parameters:
+    * product_id: id of the product
+
+    Format:
+    * JSON
+
+    Returns:
+    * An exception or a 200 status
+    """
+    return c.get_product()
