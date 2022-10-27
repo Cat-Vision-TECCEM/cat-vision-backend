@@ -2,7 +2,7 @@
 
 """
 
-from urllib import request
+
 from flask import Blueprint
 from Global.Controllers import Order as c
 

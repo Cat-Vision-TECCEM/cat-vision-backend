@@ -28,7 +28,7 @@ class Order:
             )
 
         except Exception as e:
-            return e
+            return str(e), 400
 
     def create(self, params):
 
@@ -47,7 +47,7 @@ class Order:
 
         except Exception as e:
 
-            return e
+            return str(e), 400
 
     @classmethod
     def get_sales_product(self, params):
@@ -118,7 +118,7 @@ class Order:
 
             return process
         except Exception as e:
-            return e
+            return str(e), 400
 
     @classmethod
     def get_active_orders(cls, params):

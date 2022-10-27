@@ -64,6 +64,7 @@ CREATE TABLE public.company_user
     company_id int NOT NULL,
     username varchar(20) NOT NULL,
     password varchar(50) NOT NULL,
+    is_admin bool NOT NULL default false,
     CONSTRAINT companyUserID_pk PRIMARY KEY(company_user_id),
     CONSTRAINT UserCompanyForeing_fk FOREIGN KEY(company_id) REFERENCES public.company(company_id)
 );
