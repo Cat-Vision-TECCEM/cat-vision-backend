@@ -1,6 +1,7 @@
 # PRODUCT
-- Ruta para crear nuevos productos para una company
+- Ruta para crear nuevos productos para una company --- COMPLETADO
 - Los skus se deben de de convertirse a mayusculas
+- Ruta para cargar un producto usando su id
 
 # CompanyUser
 - Sistema de login y autentificación de usuarios
