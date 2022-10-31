@@ -27,6 +27,8 @@ CREATE TABLE public.store
     street varchar(30) NOT NULL,
     number varchar(10) NOT NULL,
     city varchar(50) NOT NULL,
+    lat float NOT NULL,
+    lng float NOT NULL,
     password varchar(50) NOT NULL,
     CONSTRAINT storeID_pk PRIMARY KEY(store_id),
     CONSTRAINT unique_store UNIQUE(name, state, street, number, city)
@@ -48,6 +50,7 @@ CREATE TABLE public.order
 (
     order_id INT GENERATED ALWAYS AS IDENTITY NOT NULL,
     company_id int NOT NULL,
+    total float NOT NULL,
     store_id int NOT NULL,
     products varchar(1000) NOT NULL,
     datetime timestamp NOT NULL default current_timestamp,
