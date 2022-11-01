@@ -138,7 +138,7 @@ class Store:
         """
 
         result = get("""
-            SELECT name,state,street,number,city, store_id FROM store
+            SELECT name,state,street,number,city, lat, lng,  store_id FROM store
         """, ())
 
         stores = []
@@ -147,8 +147,12 @@ class Store:
             dict = {
                 'value': i[0],
                 'label': i[0],
-                'address': i[2] + ' ' + i[3] + ', ' + i[4] + ', ' + i[1],
-                'id': i[5]
+                'written_address': i[2] + ' ' + i[3] + ', ' + i[4] + ', ' + i[1],
+                'address': {
+                    'lat':i[5],
+                    'lng':i[6]
+                },
+                'id': i[7]
 
             }
             stores.append(dict)
