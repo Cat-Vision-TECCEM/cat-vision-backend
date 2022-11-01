@@ -22,6 +22,8 @@ def create_store():
     * street: street where the store is located
     * number: street number where the store is located
     * city: city where store is located
+    * lat: latitude of the store location
+    * lng: longitude of the store location
     * password: login password
 
     Format:
@@ -37,6 +39,8 @@ def create_store():
             'street': request.json.get('street'),
             'number': request.json.get('number'),
             'city': request.json.get('city'),
+            'lat': request.json.get('lat'),
+            'lng': request.json.get('lng'),
             'password': request.json.get('password')
         }
         store = Store(params, False)

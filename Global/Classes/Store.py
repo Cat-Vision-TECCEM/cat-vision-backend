@@ -18,6 +18,8 @@ class Store:
         self.street = None
         self.number = None
         self.city = None
+        self.lat = None
+        self.lng = None
         self.password = None
         self.load(params) if load else self.create(params)
 
@@ -32,6 +34,8 @@ class Store:
         * street: street where the store is located
         * number: street number where the store is located
         * city: city where store is located
+        * lat: latitude of the store location
+        * lng: longitude of the store location
         * password: login password
 
         Returns:
@@ -44,14 +48,16 @@ class Store:
         self.street = params['street']
         self.number = params['number']
         self.city = params['city']
+        self.lat = params['lat']
+        self.lng = params['lng']
         self.password = md5(params['password'].encode()).hexdigest()
 
         try:
 
             self.id = post(
-                '''INSERT INTO store(name, state, street, number, city, password) VALUES (%s, %s, %s, %s, %s, 
-                %s) RETURNING store_id''',
-                (self.name, self.state, self.street, self.number, self.city, self.password),
+                '''INSERT INTO store(name, state, street, number, city, lat, lng, password) VALUES (%s, %s, %s, %s, %s, 
+                %s, %s, %s) RETURNING store_id''',
+                (self.name, self.state, self.street, self.number, self.city, self.lat, self.lng, self.password),
                 True
             )
 
@@ -75,7 +81,7 @@ class Store:
 
         try:
 
-            self.name, self.state, self.street, self.number, self.city, self.password = get(
+            self.name, self.state, self.street, self.number, self.city, self.lat, self.lng, self.password = get(
                 '''SELECT * FROM store WHERE store_id = %s ''',
                 (self.id,),
                 False
