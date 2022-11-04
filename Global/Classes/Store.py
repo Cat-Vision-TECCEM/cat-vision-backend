@@ -20,7 +20,6 @@ class Store:
         self.city = None
         self.lat = None
         self.lng = None
-        self.password = None
         self.load(params) if load else self.create(params)
 
     def create(self, params):
@@ -50,14 +49,13 @@ class Store:
         self.city = params['city']
         self.lat = params['lat']
         self.lng = params['lng']
-        self.password = md5(params['password'].encode()).hexdigest()
 
         try:
 
             self.id = post(
-                '''INSERT INTO store(name, state, street, number, city, lat, lng, password) VALUES (%s, %s, %s, %s, %s, 
-                %s, %s, %s) RETURNING store_id''',
-                (self.name, self.state, self.street, self.number, self.city, self.lat, self.lng, self.password),
+                '''INSERT INTO store(name, state, street, number, city, lat, lng) VALUES (%s, %s, %s, %s, %s, 
+                %s, %s) RETURNING store_id''',
+                (self.name, self.state, self.street, self.number, self.city, self.lat, self.lng),
                 True
             )
 
@@ -81,7 +79,7 @@ class Store:
 
         try:
 
-            self.name, self.state, self.street, self.number, self.city, self.lat, self.lng, self.password = get(
+            self.name, self.state, self.street, self.number, self.city, self.lat, self.lng = get(
                 '''SELECT * FROM store WHERE store_id = %s ''',
                 (self.id,),
                 False
