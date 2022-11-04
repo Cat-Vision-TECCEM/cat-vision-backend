@@ -82,7 +82,7 @@ CREATE TABLE public.store_user
     is_admin bool NOT NULL default false,
     access_token varchar(1000),
     reset_token varchar(1000),
-    CONSTRAINT companyUserID_pk PRIMARY KEY(company_user_id),
+    CONSTRAINT storeUserID_pk PRIMARY KEY(store_user_id),
     CONSTRAINT UserStoreForeign_fk FOREIGN KEY(store_id) REFERENCES public.store(store_id)
 );
 
@@ -106,7 +106,7 @@ CREATE TABLE public.store_product
     store_id int NOT NULL,
     in_stock bool NOT NULL default true,
     CONSTRAINT productStoreID_pk PRIMARY KEY(store_product_id),
-    CONSTRAINT  FOREIGN KEY(product_id) REFERENCES public.product(product_id),
+    CONSTRAINT storeProductProductForeign_fk FOREIGN KEY(product_id) REFERENCES public.product(product_id),
     CONSTRAINT storeProductForeign_fk FOREIGN KEY(store_id) REFERENCES public.store(store_id)
 );
 
