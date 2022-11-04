@@ -25,11 +25,13 @@ from Global.Routes.Order import GLOBAL_ORDER_BLUEPRINT
 from Global.Routes.NUC import GLOBAL_NUC_BLUEPRINT
 from Global.Routes.Company import GLOBAL_COMPANY_BLUEPRINT
 from Global.Routes.Product import GLOBAL_PRODUCT_BLUEPRINT
+from Global.Routes.User import GLOBAL_USER_BLUEPRINT
 application.register_blueprint(GLOBAL_STORE_BLUEPRINT, url_prefix='/store')
 application.register_blueprint(GLOBAL_ORDER_BLUEPRINT, url_prefix='/order')
 application.register_blueprint(GLOBAL_NUC_BLUEPRINT, url_prefix='/nuc')
 application.register_blueprint(GLOBAL_COMPANY_BLUEPRINT, url_prefix='/company')
 application.register_blueprint(GLOBAL_PRODUCT_BLUEPRINT, url_prefix='/product')
+application.register_blueprint(GLOBAL_USER_BLUEPRINT, url_prefix = '/user')
 # Configuraciones de la app
 
 if __name__ == "__main__":
