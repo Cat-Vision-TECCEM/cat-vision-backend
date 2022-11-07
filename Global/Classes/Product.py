@@ -11,7 +11,7 @@ from venv import create
 
 class Product:
 
-    def __init__(self, params, load =True):
+    def __init__(self, params, load=True):
         self.product_id = None
         self.company_id = None
         self.sku = None
@@ -37,14 +37,14 @@ class Product:
 
         """
 
-        self.company_id = params['id']
+        self.company_id = params['company_id']
         self.sku = params['sku']
         self.name = params['name']
         self.selling_price = params['selling_price']
         self.image = params['image']
 
         try:
-            self.product_id = post('''INSERT INTO product(company_id,sku,name,selling_price,image) VALUES(%s,%s,%s,%s) 
+            self.product_id = post('''INSERT INTO product(company_id,sku,name,selling_price,image) VALUES(%s,%s,%s,%s,%s) 
             RETURNING product_id''', (self.company_id, self.sku, self.name, self.selling_price, self.image), True)
         except Exception as e:
             return e

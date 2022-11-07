@@ -72,8 +72,8 @@ class Order:
                 }
                 res_part_totals['total_earns'] += order[2]
                 orders_products = order[1].split('@')
-
                 res = json.loads(orders_products.pop(0))
+
                 for i in range(len(list(res.keys()))):
                     res_part_totals['totals_products'][list(res.keys())[i]] = res_part_totals['totals_products'].get(list(res.keys())[i],0) + list(res.values())[i]
 
