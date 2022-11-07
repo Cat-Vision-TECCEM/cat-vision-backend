@@ -1,0 +1,87 @@
+CREAR TIENDA
+
+{
+    "name": "LA CONFITERIA DE DONAS",
+    "state": "ALCOHOLIZADO",
+    "street": "CALLE 13",
+    "number": "69",
+    "city": "LOS SANTOS",
+    "password": "root"
+}
+
+
+---------------------------------------------------------------------------------
+
+
+CREAR ORDEN
+
+{
+    "company_id": 1,
+    "store_id": 1,
+    "products":{
+        "coca":1,
+        "pepsi":2
+    },
+    "total":200
+}
+
+RESPUESTA
+
+{
+    "0": {
+        "total_earns": 5201.74,
+        "totals_products": {
+            "coca cola 600ml": 10,
+            "fresca 600ml": 5
+        }
+    },
+    "10.0": {
+        "total": 999.99,
+        "totals": {
+            "coca cola 600ml": 2,
+            "fresca 600ml": 1
+        }
+    },
+    "11.0": {
+        "total": 4201.75,
+        "totals": {
+            "coca cola 600ml": 8,
+            "fresca 600ml": 4
+        }
+    }
+}
+
+---------------------------------------------------------------------------------
+CREAR PRODUCTO
+
+{
+    "company_id": 5,
+    "sku": "sku_009",
+    "name": "fuze tea durazno 600ml",
+    "selling_price": 14,
+    "image": "https://drive.google.com/uc?export=view&id=1kOzNAu1qRLEoWWAjdKgREft5ANx5w9s1"
+}
+
+RESPUESTA
+Product fuze tea durazno 600ml created
+
+---------------------------------------------------------------------------------
+CREAR TICKET
+
+{
+    "company_id": 5,
+    "body": "La camara tiene problemas al encender",
+    "status": "open",
+    "name": "David Rodriguez"
+}
+
+RESPUESTA
+Ticket created with the ticket id: (20,)
+
+---------------------------------------------------------------------------------
+OBTENER TICKET
+
+QueryParams:
+ticket_id
+
+RESPUESTA
