@@ -1,5 +1,6 @@
 from flask import request
 from Global.Classes.Order import Order
+from Global.Utils.sessions import token_valid
 """
     Script that handles the received requests
     Authors: David Rodriguez Fragoso, Erick Hernandez Silva
@@ -38,6 +39,7 @@ def get_sales_product():
 
 def get_active_orders():
     try:
+        token_valid(request)
         params = {
             'store_id': request.args.get('store_id', None),
             'company_id': request.args.get('company_id', None)

@@ -15,6 +15,7 @@ def register():
             'username': request.json.get('username'),
             'password': request.json.get('password'),
             'is_admin': request.json.get('is_admin'),
+            'type': request.json.get('type')
         }
         user = User(params, db=False)
         return f'User {user.username} created successfully', 200
@@ -29,6 +30,6 @@ def login():
             'password': request.json.get('password'),
         }
         user = User(params)
-        return 'Logged in', 200
+        return {'token': user.access_token}, 200
     except Exception as e:
         return str(e), 200
