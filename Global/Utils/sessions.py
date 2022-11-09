@@ -85,6 +85,7 @@ def getToken(request):
 
 def company_user_permission(request):
     token = request.headers.get('Authorization', None)
+    token = token.split()[1]
     record = get("""SELECT * from public.company_user WHERE access_token = %s """, (token,), False)
     if record is not None:
         return True
