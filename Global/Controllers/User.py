@@ -30,6 +30,8 @@ def login():
             'password': request.json.get('password'),
         }
         user = User(params)
-        return {'token': user.access_token}, 200
+        return {
+            'token': user.access_token,
+            'type'  : user.type }, 200
     except Exception as e:
         return str(e), 200
