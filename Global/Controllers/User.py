@@ -32,6 +32,8 @@ def login():
         user = User(params)
         return {
             'token': user.access_token,
-            'type'  : user.type }, 200
+            'type'  : user.type,
+            'is_admin': user.is_admin
+               }, 200
     except Exception as e:
         return str(e), 200
