@@ -3,7 +3,10 @@ CREATE TABLE public.company
     company_id INT GENERATED ALWAYS AS IDENTITY NOT NULL,
     name varchar(20) NOT NULL,
     email varchar(20) NOT NULL,
-    CONSTRAINT companyID_pk PRIMARY KEY(company_id)
+    logo varchar(500) NOT NULL,
+    permission_level INT NOT NULL,
+    CONSTRAINT companyID_pk PRIMARY KEY(company_id),
+    CONSTRAINT permission_level FOREIGN KEY (permission_level) REFERENCES permission_level(id)
 );
 
 CREATE TYPE status as ENUM('open','closed','pending','received');
@@ -18,6 +21,13 @@ CREATE TABLE public.ticket
     CONSTRAINT ticketCompanyForeign_fk FOREIGN KEY(company_id) REFERENCES public.company(company_id)
 );
 
+CREATE TABLE permission_level
+(
+    id INT GENERATED ALWAYS AS IDENTITY NOT NULL,
+    admin_number INT NOT NULL,
+    user_number INT NOT NULL,
+    store_number INT NOT NULL
+)
 
 CREATE TABLE public.store
 (
