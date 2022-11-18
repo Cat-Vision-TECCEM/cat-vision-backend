@@ -3,5 +3,6 @@
 - Los skus se deben de de convertirse a mayusculas
 - Ruta para cargar un producto usando su id
 
-# CompanyUser
-- Sistema de login y autentificación de usuarios
+
+# User
+Only a admin can create users of his own company
