@@ -2,7 +2,3 @@
 - Ruta para crear nuevos productos para una company --- COMPLETADO
 - Los skus se deben de de convertirse a mayusculas
 - Ruta para cargar un producto usando su id
-
-
-# User
-Only a admin can create users of his own company

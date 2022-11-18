@@ -96,6 +96,7 @@ def company_user_permission(request):
         else:
             raise Exception('You do not have access to this.')
 
+
 def admin_permission(request):
     token = request.headers.get('Authorization', None)
     if token is None:
@@ -109,3 +110,15 @@ def admin_permission(request):
             raise Exception('You do not have permission to do this.')
     else:
         raise Exception('You do not have access to this.')
+
+
+def keep_in_your_garden(request, id):
+    token = request.headers.get('Authorization', None)
+    if token is None:
+        raise Exception('No token was provided.')
+    if id is None:
+        raise Exception('No id was provided.')
+    token = token.split()[1]
+    record = get("""SELECT * from public.company_user WHERE access_token = %s """, (token,), False)
+    if record[0] != id:
+        raise Exception('You can only perform actions for your company.')
