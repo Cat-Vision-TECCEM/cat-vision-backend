@@ -6,10 +6,11 @@
 """
 from flask import request
 from Global.Classes.User import User
-
+from Global.Utils.sessions import admin_permission
 
 def register():
     try:
+        admin_permission(request)
         params = {
             'store_or_company_id': request.json.get('store_or_company_id'),
             'username': request.json.get('username'),

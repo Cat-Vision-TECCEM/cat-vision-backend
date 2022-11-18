@@ -105,7 +105,7 @@ class User:
             # First we seek for the username to check if the username is not taken already
             user_info = get("""SELECT * from public.company_user WHERE username = %s""", (self.username,), False)
             if user_info is not None:
-                raise Exception(f'User {self.username} already exists')
+                raise Exception(f'User {self.username} is already taken.')
 
             # If not, we can proceed
             self.password = hashlib.md5(params['password'].encode()).hexdigest()
@@ -113,6 +113,36 @@ class User:
             self.access_token = None
             self.reset_token = None
             self.store_or_company_id = params['store_or_company_id']
+            # CHECK FIRST FOR MAXIMUM USER
+            if self.is_admin:
+                # Checking maximum admins
+                current_users_query = get("""select count(*) from public.company_user where company_id=%s and is_admin=%s""",
+                                     (self.store_or_company_id, True))
+                maximum_users_query = get("""select admin_number, pl.name from public.permission_level pl, public.company c
+                where c.permission_level = pl.id and c.company_id=%s""", (self.store_or_company_id,))
+                current_admins = current_users_query[0][0]
+                maximum_admins = maximum_users_query[0][0]
+                plan_name = maximum_users_query[0][1]
+                if current_admins >= maximum_admins:
+                    raise Exception(
+                        f'Your company has reached the limit of admins accounts for your current plan {plan_name}. \n'
+                        f'Limit of admins is {maximum_admins}'
+                    )
+            else:
+                # Checking maximum normal users
+                current_users_query = get("""select count(*) from public.company_user where company_id=%s and is_admin=%s""",
+                                     (self.store_or_company_id, False))
+                maximum_users_query = get("""select user_number, pl.name from public.permission_level pl, public.company c
+                                where c.permission_level = pl.id and c.company_id=%s""", (self.store_or_company_id,))
+                current_users = current_users_query[0][0]
+                maximum_users = maximum_users_query[0][0]
+                plan_name = maximum_users_query[0][1]
+                if current_users >= maximum_users:
+                    raise Exception(
+                        f'Your company has reached the limit of users accounts for your current plan "{plan_name}". \n'
+                        f'Limit of users is {maximum_users}'
+                    )
+
             self.user_id = post(
                 '''INSERT INTO public.company_user(company_id, username, password, is_admin, access_token, reset_token) 
                 VALUES (%s, %s, %s, %s, %s, %s) RETURNING company_user_id''',

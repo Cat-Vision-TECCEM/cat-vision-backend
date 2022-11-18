@@ -95,3 +95,17 @@ def company_user_permission(request):
             raise Exception('You do not have access to this.')
         else:
             raise Exception('You do not have access to this.')
+
+def admin_permission(request):
+    token = request.headers.get('Authorization', None)
+    if token is None:
+        raise Exception('No token was provided.')
+    token = token.split()[1]
+    record = get("""SELECT * from public.company_user WHERE access_token = %s """, (token,), False)
+    if record is not None:
+        if record[4]:
+            return True
+        else:
+            raise Exception('You do not have permission to do this.')
+    else:
+        raise Exception('You do not have access to this.')

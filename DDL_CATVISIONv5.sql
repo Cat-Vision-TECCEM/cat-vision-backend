@@ -1,6 +1,7 @@
 CREATE TABLE permission_level
 (
     id INT GENERATED ALWAYS AS IDENTITY NOT NULL,
+    name varchar(100) NOT NULL,
     admin_number INT NOT NULL,
     user_number INT NOT NULL,
     store_number INT NOT NULL,
