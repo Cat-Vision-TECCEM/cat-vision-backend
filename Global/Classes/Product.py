@@ -43,11 +43,26 @@ class Product:
         self.selling_price = params['selling_price']
         self.image = params['image']
 
-        try:
-            self.product_id = post('''INSERT INTO product(company_id,sku,name,selling_price,image) VALUES(%s,%s,%s,%s,%s) 
-            RETURNING product_id''', (self.company_id, self.sku, self.name, self.selling_price, self.image), True)
-        except Exception as e:
-            return e
+        """self.product_id = post('''INSERT INTO product(company_id,sku,name,selling_price,image) VALUES(%s,%s,%s,%s,%s) 
+        RETURNING product_id''', (self.company_id, self.sku, self.name, self.selling_price, self.image), True)"""
+        created_products = get('SELECT COUNT(*) FROM product WHERE company_id = %s', (self.company_id,))
+        created_products = created_products[0][0]
+        maximum_products = get("""select product_number, pl.name from public.permission_level pl, public.company c
+            where c.permission_level = pl.id and c.company_id=%s """, (self.company_id,))
+        plan_name = maximum_products[0][1]
+        maximum_products = maximum_products[0][0]
+        if created_products >= maximum_products:
+            raise Exception(
+                f'Your company has reached the limit of registered products for your current plan {plan_name}. \n'
+                f'Limit of products is {maximum_products}, you have {created_products}'
+            )
+        else:
+            self.product_id = post(
+                '''INSERT INTO product(company_id,sku,name,selling_price,image) 
+                VALUES(%s,%s,%s,%s,%s) RETURNING product_id''',
+                (self.company_id, self.sku, self.name, self.selling_price, self.image),
+             True)
+
 
     def load(self, params):
         """

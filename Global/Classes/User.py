@@ -126,7 +126,7 @@ class User:
                 if current_admins >= maximum_admins:
                     raise Exception(
                         f'Your company has reached the limit of admins accounts for your current plan {plan_name}. \n'
-                        f'Limit of admins is {maximum_admins}'
+                        f'Limit of admins is {maximum_admins}, you have {current_admins}'
                     )
             else:
                 # Checking maximum normal users
@@ -140,7 +140,7 @@ class User:
                 if current_users >= maximum_users:
                     raise Exception(
                         f'Your company has reached the limit of users accounts for your current plan "{plan_name}". \n'
-                        f'Limit of users is {maximum_users}'
+                        f'Limit of users is {maximum_users}, you have {current_users}'
                     )
 
             self.user_id = post(

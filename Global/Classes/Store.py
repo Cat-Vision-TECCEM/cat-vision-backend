@@ -52,12 +52,27 @@ class Store:
 
         try:
 
-            self.id = post(
+            """self.id = post(
                 '''INSERT INTO store(name, state, street, number, city, lat, lng) VALUES (%s, %s, %s, %s, %s, 
                 %s, %s) RETURNING store_id''',
                 (self.name, self.state, self.street, self.number, self.city, self.lat, self.lng),
                 True
-            )
+            )"""
+
+            from flask import current_app
+            from flask_mail import Mail, Message
+            from flask import render_template
+            import os
+            with current_app.app_context():
+                # Obtenemos el sender email para enviar el correo
+                MAIL_USERNAME = os.environ.get("MAIL_USERNAME")
+                mail = Mail()
+                subject = "Solicitud de tienda"
+                recipients = ['a017487601@tec.mx']
+                sender = ('CatVision', MAIL_USERNAME)
+                html = render_template("/welcome.html")
+                msg = Message(subject=subject, recipients=recipients, sender=sender, html=html)
+                mail.send(msg)
 
         except Exception as e:
 
