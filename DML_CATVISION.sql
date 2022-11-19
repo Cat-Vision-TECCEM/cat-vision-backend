@@ -1,10 +1,10 @@
 /*permissions*/
 /*permissions*/
-INSERT INTO public.permission_level(name, admin_number,user_number,store_number) VALUES ('Free plan', 1, 1, 1);
-INSERT INTO public.permission_level(name, admin_number,user_number,store_number) VALUES ('Basic', 2, 5, 10);
-INSERT INTO public.permission_level(name, admin_number,user_number,store_number) VALUES ('Standard' , 3, 10, 20);
-INSERT INTO public.permission_level(name, admin_number,user_number,store_number) VALUES ('Pro' ,5 , 50, 100);
-INSERT INTO public.permission_level(name, admin_number,user_number,store_number) VALUES ('Unlimited' , 25, 1500, 5000);
+INSERT INTO public.permission_level(name, admin_number,user_number,store_number, product_number) VALUES ('Free plan', 1, 1, 1,5);
+INSERT INTO public.permission_level(name, admin_number,user_number,store_number, product_number) VALUES ('Basic', 2, 5, 10,10);
+INSERT INTO public.permission_level(name, admin_number,user_number,store_number, product_number) VALUES ('Standard' , 3, 10, 20,15);
+INSERT INTO public.permission_level(name, admin_number,user_number,store_number, product_number) VALUES ('Pro' ,5 , 50, 100,20);
+INSERT INTO public.permission_level(name, admin_number,user_number,store_number, product_number) VALUES ('Unlimited' , 25, 1500, 5000,25);
 
 
 /*company*/
