@@ -5,6 +5,7 @@ CREATE TABLE permission_level
     admin_number INT NOT NULL,
     user_number INT NOT NULL,
     store_number INT NOT NULL,
+    product_number INT NOT NULL,
     CONSTRAINT id_pk PRIMARY KEY(id)
 );
 
