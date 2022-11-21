@@ -78,7 +78,7 @@ CREATE TABLE public.company_user
 (
     company_user_id INT GENERATED ALWAYS AS IDENTITY NOT NULL,
     company_id int NOT NULL,
-    username varchar(20) NOT NULL,
+    username varchar(20) NOT NULL UNIQUE,
     password varchar(50) NOT NULL,
     is_admin bool NOT NULL default false,
     access_token varchar(1000),
