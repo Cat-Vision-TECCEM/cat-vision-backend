@@ -13,7 +13,8 @@ import os
 load_dotenv()
 application = Flask(__name__)
 cors = CORS(application)
-
+from flask_mail import Mail
+mail = Mail()
 # Ruta de testing
 @application.route("/")
 def hello_there():
@@ -36,15 +37,18 @@ application.register_blueprint(GLOBAL_PRODUCT_BLUEPRINT, url_prefix='/product')
 application.register_blueprint(GLOBAL_USER_BLUEPRINT, url_prefix='/user')
 application.register_blueprint(GLOBAL_TICKET_BLUEPRINT, url_prefix='/ticket')
 
+
 application.config['MAIL_SERVER'] = os.environ.get('MAIL_SERVER')
 application.config['MAIL_PORT'] = os.environ.get('MAIL_PORT')
 application.config['MAIL_USE_SSL'] = os.environ.get('MAIL_USE_SSL')
 application.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')
 application.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
+
+mail.init_app(application)
 # Configuraciones de la app
 
 if __name__ == "__main__":
-    application.run(host= "0.0.0.0", debug=True, port = os.environ.get('FLASK_PORT'))
+    application.run(host="0.0.0.0", debug=True, port = os.environ.get('FLASK_PORT'))
 
 
 #TODO:

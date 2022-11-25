@@ -42,7 +42,7 @@ def create_store():
             'lng': request.json.get('lng')
         }
         store = Store(params, False)
-        return f'Store {store.name} created', 200
+        return f'Store {store.name} requested', 200
     except Exception as e:
         return str(e), 400
 

@@ -13,7 +13,7 @@ CREATE TABLE public.company
 (
     company_id INT GENERATED ALWAYS AS IDENTITY NOT NULL,
     name varchar(20) NOT NULL,
-    email varchar(20) NOT NULL,
+    email varchar(100) NOT NULL,
     logo varchar(500) NOT NULL,
     permission_level INT NOT NULL,
     CONSTRAINT companyID_pk PRIMARY KEY(company_id),
@@ -83,6 +83,7 @@ CREATE TABLE public.company_user
     is_admin bool NOT NULL default false,
     access_token varchar(1000),
     reset_token varchar(1000),
+    email varchar(100) NOT NULL,
     CONSTRAINT companyUserID_pk PRIMARY KEY(company_user_id),
     CONSTRAINT UserCompanyForeign_fk FOREIGN KEY(company_id) REFERENCES public.company(company_id)
 );
@@ -96,6 +97,7 @@ CREATE TABLE public.store_user
     is_admin bool NOT NULL default false,
     access_token varchar(1000),
     reset_token varchar(1000),
+    email varchar(50) NOT NULL,
     CONSTRAINT storeUserID_pk PRIMARY KEY(store_user_id),
     CONSTRAINT UserStoreForeign_fk FOREIGN KEY(store_id) REFERENCES public.store(store_id)
 );
