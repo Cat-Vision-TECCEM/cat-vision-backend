@@ -12,7 +12,7 @@ from Global.Utils.sessions import admin_permission, keep_in_your_garden
 def register():
     try:
         admin_permission(request)
-        keep_in_your_garden(request,request.json.get('store_or_company_id'))
+        keep_in_your_garden(request, request.json.get('store_or_company_id'))
         params = {
             'store_or_company_id': request.json.get('store_or_company_id'),
             'username': request.json.get('username'),
@@ -23,7 +23,7 @@ def register():
         user = User(params, db=False)
         return f'User {user.username} created successfully', 200
     except Exception as e:
-        return str(e), 400
+        return {'error': str(e)}, 400
 
 
 def login():
@@ -34,9 +34,10 @@ def login():
         }
         user = User(params)
         return {
-            'token': user.access_token,
-            'type'  : user.type,
-            'is_admin': user.is_admin
+                   'token': user.access_token,
+                   'type': user.type,
+                   'is_admin': user.is_admin,
+                   'store_or_company_id': user.store_or_company_id
                }, 200
     except Exception as e:
-        return str(e), 200
+        return {'error': str(e)}, 400

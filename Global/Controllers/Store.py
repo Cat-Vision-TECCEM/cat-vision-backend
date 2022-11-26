@@ -44,7 +44,7 @@ def create_store():
         store = Store(params, False)
         return f'Store {store.name} requested', 200
     except Exception as e:
-        return str(e), 400
+        return {'error': str(e)}, 400
 
 
 def get_store_products():
@@ -67,7 +67,7 @@ def get_store_products():
         store_id = request.args.get('store_id')
         return Store.get_store_products(store_id)
     except Exception as e:
-        return str(e), 400
+        return {'error': str(e)}, 400
 
 
 def get_all_stores():
@@ -89,4 +89,4 @@ def get_all_stores():
     try:
         return Store.get_all()
     except Exception as e:
-        return str(e), 400
+        return {'error': str(e)}, 400

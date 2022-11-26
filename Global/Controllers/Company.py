@@ -34,4 +34,4 @@ def create_company():
         return f'Company {company.name} with id {company.company_id} has been created'
 
     except Exception as e:
-        return str(e), 400
+        return {'error': str(e)}, 400

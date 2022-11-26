@@ -18,5 +18,5 @@ def sendData():
 
 
     except Exception as e:
-        return str(e), 400
+        return {'error': str(e)}, 400
 

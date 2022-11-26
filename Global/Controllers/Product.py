@@ -15,13 +15,13 @@ def create_product():
             'sku': request.json.get('sku'),
             'name': request.json.get('name'),
             'selling_price': request.json.get('selling_price'),
-            'image': request.json.get('image')
+            'image': request.files.get('image')
         }
         product = Product(params, False)
         return f'Product {product.name} created', 200
 
     except Exception as e:
-        return str(e), 400
+        return {'error': str(e)}, 400
 
 
 def get_product():
@@ -32,4 +32,4 @@ def get_product():
         }
         return Product.obtener_producto(params)
     except Exception as e:
-        return str(e), 400
+        return {'error': str(e)}, 400

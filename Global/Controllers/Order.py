@@ -20,7 +20,7 @@ def create_order():
         return f'Order {order.id} created', 200
 
     except Exception as e:
-        return str(e), 400
+        return {'error': str(e)}, 400
 
 
 def get_sales_product():
@@ -34,7 +34,7 @@ def get_sales_product():
         }
         return Order.get_sales_product(params)
     except Exception as e:
-        return str(e), 400
+        return {'error': str(e)}, 400
 
 
 def get_active_orders():
@@ -47,4 +47,4 @@ def get_active_orders():
         }
         return Order.get_active_orders(params)
     except Exception as e:
-        return str(e), 400
+        return {'error': str(e)}, 400
