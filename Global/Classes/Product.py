@@ -7,6 +7,7 @@
 from Global.Utils.db import post, get
 from json import load
 from venv import create
+from Global.Utils.s3 import S3_Instance
 
 
 class Product:
@@ -43,8 +44,7 @@ class Product:
         self.selling_price = params['selling_price']
         self.image = params['image']
 
-        """self.product_id = post('''INSERT INTO product(company_id,sku,name,selling_price,image) VALUES(%s,%s,%s,%s,%s) 
-        RETURNING product_id''', (self.company_id, self.sku, self.name, self.selling_price, self.image), True)"""
+        # First we check the limit of products
         created_products = get('SELECT COUNT(*) FROM product WHERE company_id = %s', (self.company_id,))
         created_products = created_products[0][0]
         maximum_products = get("""select product_number, pl.name from public.permission_level pl, public.company c
@@ -57,6 +57,8 @@ class Product:
                 f'Limit of products is {maximum_products}, you have {created_products}'
             )
         else:
+            # We have to upload the image to the S3 Bucket
+            self.image = S3_Instance().upload_image(self.image)
             self.product_id = post(
                 '''INSERT INTO product(company_id,sku,name,selling_price,image) 
                 VALUES(%s,%s,%s,%s,%s) RETURNING product_id''',

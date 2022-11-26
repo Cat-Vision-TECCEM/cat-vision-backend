@@ -311,3 +311,6 @@ INSERT INTO public.refrigerator_product(refrigerator_id, product_id) VALUES (7, 
 INSERT INTO public.refrigerator_product(refrigerator_id, product_id) VALUES (8, 4);
 INSERT INTO public.refrigerator_product(refrigerator_id, product_id) VALUES (9, 6);
 INSERT INTO public.refrigerator_product(refrigerator_id, product_id) VALUES (10, 5);
+
+INSERT INTO public.company_user(company_id, username, password, is_admin, access_token, reset_token, email)
+VALUES (1, 'Donas', '202cb962ac59075b964b07152d234b70', true, null, null, 'hernandezsilvaerick@gmail.com')
