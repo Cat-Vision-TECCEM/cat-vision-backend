@@ -39,20 +39,13 @@ def createStore():
 @GLOBAL_STORE_BLUEPRINT.route('/getProducts', methods=['GET'])
 def getStoreProducts():
     """
-    Route used to create a new store in the databse
+
 
     Method:
     * GET
 
     Parameters:
-    * name: name of the store
-    * state: state where the store is located
-    * street: street where the store is located
-    * number: street number where the store is located
-    * city: city where store is located
-    * lat: latitude of the store location
-    * lng: longitude of the store location
-    * password: login password
+    *
 
     Format:
     * QueryParams

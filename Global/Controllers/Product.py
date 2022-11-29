@@ -8,7 +8,12 @@ from flask import request
 from Global.Classes.Product import Product
 from Global.Utils.sessions import token_valid, admin_permission
 
+
 def create_product():
+    """
+
+    :return:
+    """
     try:
         token_valid(request)
         admin_permission(request)
@@ -27,7 +32,6 @@ def create_product():
 
 
 def get_product():
-
     try:
         params = {
             'product_id': request.args.get('product_id')

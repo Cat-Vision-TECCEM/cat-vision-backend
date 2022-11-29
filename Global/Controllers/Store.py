@@ -64,6 +64,7 @@ def get_store_products():
     * An exception or a 200 status
     """
     try:
+
         store_id = request.args.get('store_id')
         return Store.get_store_products(store_id)
     except Exception as e:

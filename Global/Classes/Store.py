@@ -67,7 +67,7 @@ class Store:
             MAIL_USERNAME = os.environ.get("MAIL_USERNAME")
             mail = Mail()
             subject = "Solicitud de tienda"
-            recipients = ['HERNANDEZSILVAERICK@GMAIL.COM']
+            recipients = [os.environ.get('STORE_REQUEST_EMAIL')]
             sender = ('CatVision', MAIL_USERNAME)
             html = render_template("/welcome.html")
             msg = Message(subject=subject, recipients=recipients, sender=sender, html=html)

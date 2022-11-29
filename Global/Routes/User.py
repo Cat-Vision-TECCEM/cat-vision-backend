@@ -12,3 +12,7 @@ def register():
 @GLOBAL_USER_BLUEPRINT.route('/login', methods=['POST'])
 def login():
     return c.login()
+
+@GLOBAL_USER_BLUEPRINT.route('/recover-password', methods=['POST'])
+def recover_password():
+    return c.recover_password()

@@ -7,9 +7,12 @@
 import datetime
 import hashlib
 import os
-
+from time import time
 import jwt
+from threading import Thread
 
+from flask import current_app, render_template
+from flask_mail import Mail, Message
 from Global.Utils.db import get, post
 
 
@@ -24,6 +27,7 @@ class User:
         self.access_token = None
         self.reset_token = None
         self.type = None
+        self.email = None
         if db:
             if not current:
                 # We use this when we want to login comparing passwords
@@ -54,6 +58,7 @@ class User:
             self.password = user_info[3]
             self.is_admin = user_info[4]
             self.type = 'company'
+            self.email = user_info[5]
         else:
             user_info = get("""SELECT * from public.store_user WHERE username = %s""", (username,), False)
             if user_info is not None:
@@ -63,6 +68,7 @@ class User:
                 self.password = user_info[3]
                 self.is_admin = user_info[4]
                 self.type = 'store'
+                self.email = user_info[5]
 
         if self.user_id is None:
             raise Exception('Cuenta inexistente')
@@ -113,6 +119,7 @@ class User:
             self.access_token = None
             self.reset_token = None
             self.store_or_company_id = params['store_or_company_id']
+            self.email = params['email']
             # CHECK FIRST FOR MAXIMUM USER
             if self.is_admin:
                 # Checking maximum admins
@@ -144,9 +151,11 @@ class User:
                     )
 
             self.user_id = post(
-                '''INSERT INTO public.company_user(company_id, username, password, is_admin, access_token, reset_token) 
-                VALUES (%s, %s, %s, %s, %s, %s) RETURNING company_user_id''',
-                (self.store_or_company_id, self.username, self.password, self.is_admin, self.access_token, self.reset_token),
+                '''INSERT INTO public.company_user(company_id, username, password, is_admin, access_token, reset_token, 
+                email) 
+                VALUES (%s, %s, %s, %s, %s, %s, %s) RETURNING company_user_id''',
+                (self.store_or_company_id, self.username, self.password, self.is_admin, self.access_token,
+                 self.reset_token, self.email),
                 True
             )
 
@@ -164,10 +173,10 @@ class User:
             self.reset_token = None
             self.store_or_company_id = params['store_or_company_id']
             self.user_id = post(
-                '''INSERT INTO public.store_user(store_id, username, password, is_admin, access_token, reset_token) 
-                VALUES (%s, %s, %s, %s, %s, %s) RETURNING store_user_id''',
+                '''INSERT INTO public.store_user(store_id, username, password, is_admin, access_token, reset_token, email) 
+                VALUES (%s, %s, %s, %s, %s, %s, %s) RETURNING store_user_id''',
                 (self.store_or_company_id, self.username, self.password, self.is_admin, self.access_token,
-                 self.reset_token),
+                 self.reset_token, self.email),
                 True
             )
 
@@ -181,3 +190,46 @@ class User:
         self.access_token = params[5]
         self.reset_token = params[6]
         self.type = params[7]
+
+    @staticmethod
+    def recover_password(params):
+        """
+        Method that searches an user in the database and generates a JWT to recover its password.
+        :param params:
+        :return:
+        """
+        token = jwt.encode({'reset_password': params['email'], 'exp': time() + 500},
+                           key=os.environ.get('JWT_SECRET_KEY'),
+                           algorithm="HS256")
+
+        user_info = get("""SELECT * from public.store_user WHERE email = %s""", (params['email'],), False)
+        if user_info is not None:
+
+            post("""UPDATE public.store_user SET reset_token = %s WHERE email = %s""", (token, params['email']))
+
+        else:
+            user_info = get("""SELECT * from public.company_user WHERE email = %s""", (params['email'],), False)
+            if user_info is not None:
+                post("""UPDATE public.store_user SET reset_token = %s WHERE email = %s""", (token, params['email']))
+
+        if user_info is None:
+            raise Exception('Cuenta inexistente')
+
+        with current_app.app_context():
+            # Obtenemos el sender email para enviar el correo
+            MAIL_USERNAME = os.environ.get("MAIL_USERNAME")
+            mail = Mail()
+            subject = "Recover your password"
+            recipients = [params['email']]
+            sender = ('CatVision', MAIL_USERNAME)
+            html = render_template("/recover_password.html",
+                                   url=os.environ.get('ACTION_URL_PASSWORD_RECOVERY'),
+                                   correo=params['email'],
+                                   token=token)
+            msg = Message(subject=subject, recipients=recipients, sender=sender, html=html)
+            mail.send(msg)
+            return f'Password recovery email sent.', 200
+
+
+
+
