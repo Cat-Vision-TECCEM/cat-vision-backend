@@ -16,3 +16,7 @@ def login():
 @GLOBAL_USER_BLUEPRINT.route('/recover-password', methods=['POST'])
 def recover_password():
     return c.recover_password()
+
+@GLOBAL_USER_BLUEPRINT.route('/reset-password', methods=['GET'])
+def reset_password():
+    return c.reset_password()

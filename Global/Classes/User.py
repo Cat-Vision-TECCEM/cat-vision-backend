@@ -204,13 +204,12 @@ class User:
 
         user_info = get("""SELECT * from public.store_user WHERE email = %s""", (params['email'],), False)
         if user_info is not None:
-
             post("""UPDATE public.store_user SET reset_token = %s WHERE email = %s""", (token, params['email']))
 
         else:
             user_info = get("""SELECT * from public.company_user WHERE email = %s""", (params['email'],), False)
             if user_info is not None:
-                post("""UPDATE public.store_user SET reset_token = %s WHERE email = %s""", (token, params['email']))
+                post("""UPDATE public.company_user SET reset_token = %s WHERE email = %s""", (token, params['email']))
 
         if user_info is None:
             raise Exception('Cuenta inexistente')
@@ -224,11 +223,31 @@ class User:
             sender = ('CatVision', MAIL_USERNAME)
             html = render_template("/recover_password.html",
                                    url=os.environ.get('ACTION_URL_PASSWORD_RECOVERY'),
-                                   correo=params['email'],
                                    token=token)
             msg = Message(subject=subject, recipients=recipients, sender=sender, html=html)
             mail.send(msg)
             return f'Password recovery email sent.', 200
+
+    @staticmethod
+    def reset_password(params):
+        passsword = hashlib.md5(params['password'].encode()).hexdigest()
+        token = params['token']
+        # We look for the user in both user types
+        user_info = get("""SELECT * from public.store_user WHERE reset_token = %s""", (token,), False)
+        if user_info is not None:
+            post("""UPDATE public.store_user SET reset_token = %s, password = %s WHERE reset_token = %s""",
+                 ('', passsword, token))
+
+        else:
+            user_info = get("""SELECT * from public.company_user WHERE reset_token = %s""", (token,), False)
+            if user_info is not None:
+                post("""UPDATE public.company_user SET reset_token = %s, password = %s WHERE reset_token = %s""",
+                     ('', passsword, token))
+
+        if user_info is None:
+            raise Exception('Cuenta inexistente o token inválido')
+
+        return f'Password updated.'
 
 
 

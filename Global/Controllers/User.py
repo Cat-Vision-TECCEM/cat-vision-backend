@@ -53,3 +53,14 @@ def recover_password():
 
     except Exception as e:
         return {'error': str(e)}, 400
+
+def reset_password():
+    try:
+        params = {
+            'email': request.args.get('email'),
+            'token': request.args.get('token'),
+            'password': request.args.get('password')
+        }
+        return User.reset_password(params)
+    except Exception as e:
+        return {'error': str(e)}, 400
