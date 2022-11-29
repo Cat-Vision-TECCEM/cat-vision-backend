@@ -39,6 +39,11 @@ class Company:
                 INSERT INTO public.company(name, email) VALUES (%s, %s) RETURNING company_id
             ''', (self.name, self.email), True)[0]
 
+            post(
+                '''INSERT INTO product(company_id,sku,name,selling_price,image) 
+                VALUES(%s,%s,%s,%s,%s) RETURNING product_id''',
+                (self.company_id, "-69", "Unrecognized product", 0, 'https://images.emojiterra.com/google/android-11/512px/2753.png'),
+                True)
             return f'Company {self.name} has been created with id {self.company_id}', 200
         except Exception as e:
             return str(e), 400
