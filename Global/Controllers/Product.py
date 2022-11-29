@@ -25,7 +25,7 @@ def create_product():
             'image': request.files.get('image')
         }
         product = Product(params, False)
-        return f'Product {product.name} created', 200
+        return {'success': f'Product {product.name} created'}, 200
 
     except Exception as e:
         return {'error': str(e)}, 400
