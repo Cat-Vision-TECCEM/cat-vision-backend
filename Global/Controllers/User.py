@@ -22,7 +22,7 @@ def register():
             'email': request.json.get('email')
         }
         user = User(params, db=False)
-        return f'User {user.username} created successfully', 200
+        return {'success': f'User {user.username} created successfully'}, 200
     except Exception as e:
         return {'error': str(e)}, 400
 
