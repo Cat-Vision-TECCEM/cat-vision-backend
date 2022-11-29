@@ -20,3 +20,10 @@ def sendData():
     except Exception as e:
         return {'error': str(e)}, 400
 
+def get_products():
+    try:
+        company_id = request.json.get('company_id')
+        return NUC.get_products(company_id)
+
+    except Exception as e:
+        return {'error': str(e)}, 400

@@ -59,4 +59,17 @@ class NUC:
         except Exception as e:
             return str(e)
 
+    @staticmethod
+    def get_products(company_id):
+        products= get('''
+        SELECT product_id, company_id, sku, name, selling_price, image
+        FROM public.product WHERE company_id=%s;
+        ''', (company_id,))
+        products_dict = {}
+        for product in products:
+            products_dict[product[3]] = product[2]
+
+        return products_dict, 200
+
+
 
