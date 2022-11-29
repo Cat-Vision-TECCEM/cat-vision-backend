@@ -146,3 +146,19 @@ CREATE TABLE public.refrigerator_product
     CONSTRAINT refriProductForeign_fk FOREIGN KEY(refrigerator_id) REFERENCES public.refrigerator(refrigerator_id),
     CONSTRAINT productRefriForeign_fk FOREIGN KEY(product_id) REFERENCES public.product(product_id)
 );
+
+
+create or replace function insertar_producto()
+returns trigger as
+$$
+declare v_compid public.company;
+Begin
+
+select company_id into v_compid from company order by company_id desc limit 1;
+insert into public.product(company_id,sku,name,selling_price,image) values(v_compid.company_id,'-69','No reconocido',0,'https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Question_mark_%28black%29.svg/800px-Question_mark_%28black%29.svg.png');
+return new;
+end;
+
+$$
+
+language 'plpgsql';
