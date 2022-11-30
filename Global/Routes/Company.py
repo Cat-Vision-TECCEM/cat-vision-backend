@@ -12,6 +12,6 @@ def create_company():
     return c.create_company()
 
 
-@GLOBAL_COMPANY_BLUEPRINT.route('/get-companies', methods=['GET'])
+@GLOBAL_COMPANY_BLUEPRINT.route('/get-all', methods=['GET'])
 def get_companies():
     return c.get_companies()

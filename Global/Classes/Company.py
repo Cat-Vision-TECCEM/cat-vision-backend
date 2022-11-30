@@ -51,8 +51,17 @@ class Company:
     def get_all():
         companies = get(
             """
-            SELECT * from public.company
+            SELECT company_id, name, logo FROM public.company;
             """,
             (),
         )
-        return companies
+        companies_list = []
+        for company in companies:
+            companies_list.append(
+                {
+                    'id': company[0],
+                    'name': company[1],
+                    'image': company[2]
+                }
+            )
+        return companies_list
