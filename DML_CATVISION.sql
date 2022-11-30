@@ -133,7 +133,11 @@ INSERT INTO public.product(company_id,sku,name, selling_price, image) VALUES (1,
 INSERT INTO public.product(company_id,sku,name, selling_price, image) VALUES (1,'sku_014','powerade moras 355ml', 13, 'https://drive.google.com/uc?export=view&id=1Ez7t6UKUK2unogQazeHeh343Kfkc1WFi');
 INSERT INTO public.product(company_id,sku,name, selling_price, image) VALUES (1,'sku_015','powerade moras 600ml', 14, 'https://drive.google.com/uc?export=view&id=1TBQ-KeHRRsESjxxLdxOMOw8Lj9Oc1NxU');
 INSERT INTO public.product(company_id,sku,name, selling_price, image) VALUES (1,'sku_016','powerade ponche 600ml', 14, 'https://drive.google.com/uc?export=view&id=1klNuA4y6JjSnKC9yL89PqkiRfyxtNJyF');
-INSERT INTO public.product(company_id,sku,name, selling_price, image) VALUES (1,'sku_017','sprite 355ml', 14, 'https://drive.google.com/uc?export=view&id=1psmVDdIkPENMCOPpnS8yDmc8Ce_xp7HV');
+INSERT INTO public.product(company_id,sku,name, selling_price, image) VALUES (1,'sku_017','sprite 355ml', 14, 'https://mundogourmet.com.mx/tienda/wp-content/uploads/2020/10/sprite.png');
+INSERT INTO public.product(company_id,sku,name, selling_price, image) VALUES (1,'sku_018','fanta 355ml', 14, 'https://www.hereforagooddeal.com/wp-content/uploads/2017/11/Fanta-orange-canada.png');
+INSERT INTO public.product(company_id,sku,name, selling_price, image) VALUES (1,'sku_019','limon y nada 600ml', 14, 'https://www.coca-colamexico.com.mx/content/dam/journey/mx/es/private/brand-detail/ynada/Limon_Pepino.png');
+INSERT INTO public.product(company_id,sku,name, selling_price, image) VALUES (1,'sku_020','sprite 600ml', 14, 'https://tienda.farmaciasroma.com/media/catalog/product/cache/8cfc93e6196efd5c8964fe64a59d97bb/0/a/0a405ea3d317fb1a77a3f6576f038a36_7501055305629-1.png');
+
 
 INSERT INTO public.product(company_id,sku,name, selling_price, image) VALUES (2,'sku_000', 'ciel 600ml', 10, 'https://drive.google.com/uc?export=view&id=1nHx5OICXWu760uK20j10p0K1QTBRsPtv');
 INSERT INTO public.product(company_id,sku,name, selling_price, image) VALUES (2,'sku_001','ciel mineral 600ml', 12, 'https://drive.google.com/uc?export=view&id=1BzzXXX-_5l1-1yRO0sWr_wXyq6_-YTS1');
