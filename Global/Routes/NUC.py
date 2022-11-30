@@ -32,6 +32,6 @@ def sendData():
     return c.sendData()
 
 
-@GLOBAL_NUC_BLUEPRINT.route('/get-products')
+@GLOBAL_NUC_BLUEPRINT.route('/get-products', methods=['POST'])
 def get_products():
     return c.get_products()
