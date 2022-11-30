@@ -47,3 +47,12 @@ class Company:
             return f'Company {self.name} has been created with id {self.company_id}', 200
         except Exception as e:
             return str(e), 400
+    @staticmethod
+    def get_all():
+        companies = get(
+            """
+            SELECT * from public.company
+            """,
+            (),
+        )
+        return companies

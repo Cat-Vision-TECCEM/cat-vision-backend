@@ -35,3 +35,9 @@ def create_company():
 
     except Exception as e:
         return {'error': str(e)}, 400
+
+def get_companies():
+    try:
+        return Company.get_all()
+    except Exception as e:
+        return {'error': str(e)}, 400
