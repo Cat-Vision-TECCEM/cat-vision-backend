@@ -39,7 +39,7 @@ def create_ticket():
         ticket = Ticket(params, False)
         return {'success': f'Ticket created with the ticket id: {ticket.ticket_id}'}, 200
     except Exception as e:
-        return str(e), 400
+        return {'error': str(e)}, 400
 
 
 def get_ticket():
