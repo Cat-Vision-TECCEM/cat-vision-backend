@@ -120,5 +120,5 @@ def keep_in_your_garden(request, id):
         raise Exception('No id was provided.')
     token = token.split()[1]
     record = get("""SELECT * from public.company_user WHERE access_token = %s """, (token,), False)
-    if record[0] != int(id):
+    if record[1] != int(id):
         raise Exception('You can only perform actions for your company.')
