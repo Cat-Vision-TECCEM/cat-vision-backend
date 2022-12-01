@@ -96,3 +96,23 @@ class Product:
             }
         except Exception as e:
             return e
+
+    @staticmethod
+    def get_products(company_id):
+        products = get('''
+            SELECT product_id, company_id, sku, name, selling_price, image
+            FROM public.product WHERE company_id=%s;
+            ''', (company_id,))
+        product_list = []
+        for product in products:
+            product_list.append(
+                {
+                    'id': product[0],
+                    'sku': product[2],
+                    'name': product[3],
+                    'price': product[4],
+                    'image': product[5]
+                }
+            )
+
+        return product_list, 200

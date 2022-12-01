@@ -39,3 +39,10 @@ def get_product():
         return Product.obtener_producto(params)
     except Exception as e:
         return {'error': str(e)}, 400
+
+def get_all():
+    try:
+        company_id = request.json.get('company_id')
+        return Product.get_products(company_id)
+    except Exception as e:
+        return {'error': str(e)}, 400

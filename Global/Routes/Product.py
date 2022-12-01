@@ -46,3 +46,8 @@ def get_product():
     * An exception or a 200 status
     """
     return c.get_product()
+
+
+@GLOBAL_PRODUCT_BLUEPRINT.route('/get-all', methods=['POST'])
+def get_all():
+    return c.get_all()
