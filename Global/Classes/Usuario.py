@@ -146,7 +146,7 @@ class Usuario():
                 subject = "Te damos la bienvenida"
                 recipients = [self.correo]
                 sender = ('Finzak', MAIL_USERNAME)
-                html = render_template("/welcome.html", name=self.nombre)
+                html = render_template("/new_store.html", name=self.nombre)
                 msg = Message(subject=subject, recipients=recipients, sender=sender, html=html)
                 mail.send(msg)
         else:

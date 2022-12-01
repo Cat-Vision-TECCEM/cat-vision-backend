@@ -36,7 +36,7 @@ def token_valid(request):
         elif exp_timestamp < datetime.timestamp(now):
             # Borramos el token ya que la sesión ya caducó
             post("""UPDATE usuario SET access_token= %s WHERE access_token = %s""", (None, token))
-            raise Exception('Sesión expirada')
+            raise Exception('Token error')
 
     token = request.headers.get('Authorization', None)
     if token is not None:
@@ -49,10 +49,10 @@ def token_valid(request):
             if record is not None:
                 check(record)
             else:
-                raise Exception('Usuario inexistente o token expirado')
+                raise Exception('Token error')
 
     else:
-        raise Exception('El token no fue proporcionado')
+        raise Exception('Token error')
 
 
 def getCurrentUser(request):

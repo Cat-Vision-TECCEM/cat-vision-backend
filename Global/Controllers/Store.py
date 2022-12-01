@@ -39,7 +39,8 @@ def create_store():
             'number': request.json.get('number'),
             'city': request.json.get('city'),
             'lat': request.json.get('lat'),
-            'lng': request.json.get('lng')
+            'lng': request.json.get('lng'),
+            'company_id':request.json.get('company_id')
         }
         store = Store(params, False)
         return f'Store {store.name} requested', 200

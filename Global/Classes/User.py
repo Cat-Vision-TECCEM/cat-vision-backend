@@ -159,6 +159,7 @@ class User:
                 True
             )
 
+
         # If user type is a store user
         elif self.type == 'store':
             # First we seek for the username to check if the username is not taken already
@@ -172,6 +173,7 @@ class User:
             self.access_token = None
             self.reset_token = None
             self.store_or_company_id = params['store_or_company_id']
+            self.email = params['email']
             self.user_id = post(
                 '''INSERT INTO public.store_user(store_id, username, password, is_admin, access_token, reset_token, email) 
                 VALUES (%s, %s, %s, %s, %s, %s, %s) RETURNING store_user_id''',
@@ -179,6 +181,18 @@ class User:
                  self.reset_token, self.email),
                 True
             )
+
+        with current_app.app_context():
+            # Obtenemos el sender email para enviar el correo
+            MAIL_USERNAME = os.environ.get("MAIL_USERNAME")
+            mail = Mail()
+            subject = "Your CatVision account has been created"
+            recipients = [params['email']]
+            sender = ('CatVision', MAIL_USERNAME)
+            html = render_template("/welcome.html",
+                                   username=self.username)
+            msg = Message(subject=subject, recipients=recipients, sender=sender, html=html)
+            mail.send(msg)
 
 
     def obtenerUsuarioActual(self, params):

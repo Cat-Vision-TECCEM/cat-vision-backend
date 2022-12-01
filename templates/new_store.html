@@ -11,18 +11,24 @@
   <body>
     <div class="align-center">
       <div class="padding-bottom padding-medium">
-        <h1>Hola, {{username}}.</h1>
+        <h1>Nueva solicitud de tienda recibida</h1>
       </div>
       <div class="padding-bottom padding-medium">
         <div class="text-size-medium">
-           Nos es un placer informarte que tu cuenta de CatVisión ha sido creada y puedes acceder
-            a ella en <a href="https://catvision.proyectos-vash-tec-cem.net/">https://catvision.proyectos-vash-tec-cem.net/</a>
+          La compañía {{company}} ha solicitado que se agregue una nueva tienda
+          con los siguientes datos:
         </div>
-          <div class="text-size-medium">
-           Puedes revisar nuestros términos y condiciones de uso, así como nuestra política de privacidad
-              <a href="https://drive.google.com/file/d/1imsQ_0AMR12MoR4HYqXp-WTSvNBCi5gK/view?usp=sharing">en este link </a>
+      </div>
+      <div class="padding-bottom padding-medium">
+        <div class="text-size-medium">
+          * Nombre de la tienda: {{name}}
         </div>
-
+        <div class="text-size-medium">
+          * Direccion de la tienda: {{street}}, #{{number}}, {{city}}, {{state}}
+        </div>
+        <div class="text-size-medium">
+          * Coordenadas de la tienda: {{lat}}, {{lng}}
+        </div>
       </div>
     </div>
     <script

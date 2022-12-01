@@ -12,7 +12,7 @@ from Global.Utils.sessions import admin_permission, keep_in_your_garden
 def register():
     try:
         admin_permission(request)
-        keep_in_your_garden(request, request.json.get('store_or_company_id'))
+        #keep_in_your_garden(request, request.json.get('store_or_company_id'))
         params = {
             'store_or_company_id': request.json.get('store_or_company_id'),
             'username': request.json.get('username'),

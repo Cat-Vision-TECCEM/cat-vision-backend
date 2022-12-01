@@ -49,6 +49,7 @@ class Store:
         self.city = params['city']
         self.lat = params['lat']
         self.lng = params['lng']
+        company_id = params['company_id']
 
 
         """self.id = post(
@@ -62,6 +63,9 @@ class Store:
         from flask_mail import Mail, Message
         from flask import render_template
         import os
+        company = get("""
+        SELECT name from public.company where company_id = %s
+        """, (company_id,), False)
         with current_app.app_context():
             # Obtenemos el sender email para enviar el correo
             MAIL_USERNAME = os.environ.get("MAIL_USERNAME")
@@ -69,7 +73,9 @@ class Store:
             subject = "Solicitud de tienda"
             recipients = [os.environ.get('STORE_REQUEST_EMAIL')]
             sender = ('CatVision', MAIL_USERNAME)
-            html = render_template("/welcome.html")
+            html = render_template("/new_store.html", name=self.name,
+                          state=self.state, street=self.street,
+                                   number=self.number, city=self.city, lat=self.lat, lng = self.lng, company = company[0])
             msg = Message(subject=subject, recipients=recipients, sender=sender, html=html)
             mail.send(msg)
 
