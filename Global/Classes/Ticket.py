@@ -33,6 +33,7 @@ class Ticket:
         self.body = params['body']
         self.status = params['status']
         self.name = params['name']
+        self.username = params['username']
 
         try:
             self.ticket_id = post(
@@ -40,5 +41,24 @@ class Ticket:
                 (self.company_id, self.body, self.status, self.name),
                 True
             )
+            self.ticket_id = self.ticket_id[0]
+            from flask import current_app
+            from flask_mail import Mail, Message
+            from flask import render_template
+            import os
+            company = get("""
+                    SELECT name from public.company where company_id = %s
+                    """, (self.company_id,), False)
+            with current_app.app_context():
+                # Obtenemos el sender email para enviar el correo
+                MAIL_USERNAME = os.environ.get("MAIL_USERNAME")
+                mail = Mail()
+                subject = "Nuevo reporte recibido"
+                recipients = [os.environ.get('STORE_REQUEST_EMAIL')]
+                sender = ('CatVision', MAIL_USERNAME)
+                html = render_template("/new_ticket.html", subject=self.name, username=self.username,
+                                       company=company[0])
+                msg = Message(subject=subject, recipients=recipients, sender=sender, html=html)
+                mail.send(msg)
         except Exception as e:
             return str(e), 400

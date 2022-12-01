@@ -33,10 +33,11 @@ def create_ticket():
             'company_id': request.json.get('company_id'),
             'body': request.json.get('body'),
             'status': request.json.get('status'),
-            'name': request.json.get('name')
+            'name': request.json.get('subject'),
+            'username': request.json.get('username')
         }
         ticket = Ticket(params, False)
-        return f'Ticket created with the ticket id: {ticket.ticket_id}', 200
+        return {'success': f'Ticket created with the ticket id: {ticket.ticket_id}'}, 200
     except Exception as e:
         return str(e), 400
 
