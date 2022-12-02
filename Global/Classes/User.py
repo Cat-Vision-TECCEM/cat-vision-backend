@@ -240,7 +240,7 @@ class User:
                                    token=token)
             msg = Message(subject=subject, recipients=recipients, sender=sender, html=html)
             mail.send(msg)
-            return f'Password recovery email sent.', 200
+            return {'success': f'Password recovery email sent.'}, 200
 
     @staticmethod
     def reset_password(params):
