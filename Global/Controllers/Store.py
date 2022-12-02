@@ -43,7 +43,7 @@ def create_store():
             'company_id':request.json.get('company_id')
         }
         store = Store(params, False)
-        return f'Store {store.name} requested', 200
+        return {'success': f'Store {store.name} requested'}, 200
     except Exception as e:
         return {'error': str(e)}, 400
 
