@@ -10,6 +10,8 @@ import os
 from time import time
 import jwt
 from threading import Thread
+from Crypto.Cipher import AES
+import base64
 
 from flask import current_app, render_template
 from flask_mail import Mail, Message
@@ -120,6 +122,8 @@ class User:
             self.reset_token = None
             self.store_or_company_id = params['store_or_company_id']
             self.email = params['email']
+            cipher = AES.new(os.environ.get('JWT_SECRET_KEY'), AES.MODE_ECB)  # never use ECB in strong systems obviously
+            self.email = base64.b64encode(cipher.encrypt(self.email))
             # CHECK FIRST FOR MAXIMUM USER
             if self.is_admin:
                 # Checking maximum admins
@@ -212,18 +216,20 @@ class User:
         :param params:
         :return:
         """
-        token = jwt.encode({'reset_password': params['email'], 'exp': time() + 500},
+        cipher = AES.new(os.environ.get('JWT_SECRET_KEY'), AES.MODE_ECB)  # never use ECB in strong systems obviously
+        email = base64.b64encode(cipher.encrypt(params['email']))
+        token = jwt.encode({'reset_password': email, 'exp': time() + 500},
                            key=os.environ.get('JWT_SECRET_KEY'),
                            algorithm="HS256")
 
-        user_info = get("""SELECT * from public.store_user WHERE email = %s""", (params['email'],), False)
+        user_info = get("""SELECT * from public.store_user WHERE email = %s""", (email,), False)
         if user_info is not None:
-            post("""UPDATE public.store_user SET reset_token = %s WHERE email = %s""", (token, params['email']))
+            post("""UPDATE public.store_user SET reset_token = %s WHERE email = %s""", (token, email))
 
         else:
-            user_info = get("""SELECT * from public.company_user WHERE email = %s""", (params['email'],), False)
+            user_info = get("""SELECT * from public.company_user WHERE email = %s""", (email,), False)
             if user_info is not None:
-                post("""UPDATE public.company_user SET reset_token = %s WHERE email = %s""", (token, params['email']))
+                post("""UPDATE public.company_user SET reset_token = %s WHERE email = %s""", (token, email))
 
         if user_info is None:
             raise Exception('Cuenta inexistente')
