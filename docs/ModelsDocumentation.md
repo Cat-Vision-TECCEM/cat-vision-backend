@@ -13,7 +13,7 @@ En este documento se tiene el propósito de informar los detalles relacionados c
 ## Pipeline
 El esquema de trabajo que se sigue para ensamblar los resultados de los modelos entre sí es el siguiente:
 
-<img src="https://imgur.com/a/2RT1FTA" alt="Diagrama de pipeline de modelos de CatVision">
+<img src="https://i.imgur.com/kCQxCf8.png" alt="Diagrama de pipeline de modelos de CatVision">
 
 La forma en la que cada uno de los cuatro modelos presentados en el diagrama trabaja es la siguiente:
 - **MS1** ***(Modelo de Segmentación 1)***: Este modelo se encarga de detectar el contorno del refrigerador y recortar la imagen de tal manera que únicamente esté presente el objeto con los productos en su interior.
