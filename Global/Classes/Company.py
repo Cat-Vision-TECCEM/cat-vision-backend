@@ -1,11 +1,10 @@
-from Global.Utils.db import post, get
-
 """
-    Script that handles the received requests
-    Authors: Erick Hernandez Silva
+    Class that describes a Company
+    Authors: David Rodriguez Fragoso, Erick Hernandez Silva
     Created: 26/10/2022
     Last update: 26/10/2022
 """
+from Global.Utils.db import post, get
 
 
 class Company:

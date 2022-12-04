@@ -1,5 +1,5 @@
 """
-    Class that describes a product
+    Class that describes a Product
     Authors: David Rodriguez Fragoso, Erick Hernandez Silva
     Created: 26/10/2022
     Last update: 26/10/2022

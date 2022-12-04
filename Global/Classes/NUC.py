@@ -1,13 +1,10 @@
-from datetime import timedelta
-
+"""
+    Class that describes the functions sent to a NUC
+    Authors: David Rodriguez Fragoso, Erick Hernandez Silva
+    Created: 26/10/2022
+    Last update: 26/10/2022
+"""
 from Global.Utils.db import post, get
-
-"""
-    Script that handles the received requests
-    Authors: Erick Hernandez Silva
-    Created: 24/10/2022
-    Last update: 24/10/2022
-"""
 
 
 class NUC:

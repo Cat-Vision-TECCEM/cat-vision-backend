@@ -1,5 +1,5 @@
 """
-    Class that describes the functions of a company user
+    Class that describes the functions of a Company/Store User
     Authors: David Rodriguez Fragoso, Erick Hernandez Silva
     Created: 18/10/2022
     Last update: 18/10/2022

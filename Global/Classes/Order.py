@@ -1,6 +1,11 @@
+"""
+    Class that describes an Order
+    Authors: David Rodriguez Fragoso, Erick Hernandez Silva
+    Created: 26/10/2022
+    Last update: 26/10/2022
+"""
 import json
 from datetime import timedelta
-
 from Global.Utils.db import post, get
 
 

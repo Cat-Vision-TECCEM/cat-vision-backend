@@ -1,6 +1,9 @@
-import json
-from datetime import timedelta
-
+"""
+    Class that describes a Ticket
+    Authors: David Rodriguez Fragoso, Erick Hernandez Silva
+    Created: 26/10/2022
+    Last update: 26/10/2022
+"""
 from Global.Utils.db import post, get
 
 

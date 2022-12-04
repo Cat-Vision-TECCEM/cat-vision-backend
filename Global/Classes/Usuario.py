@@ -1,17 +1,14 @@
 """
-* Clase que representa a un usuario. Sirve para guardar los datos y portafolios del usuario en un JSON.
-* Se realizan todos los cálculos necesarios dentro del __init__.
-* Autor: Erick Hernández Silva
-* Fecha de creación: 28/02/2022
-* Última a actualización: 20/03/2022
+    Class that describes the functions of a Company/Store User
+    Authors: David Rodriguez Fragoso, Erick Hernandez Silva
+    Created: 18/10/2022
+    Last update: 18/10/2022
 """
 import datetime
 import json
 import os
 import hashlib
-
 import jwt
-
 from Global.Utils.db import post, get
 
 

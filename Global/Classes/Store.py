@@ -1,5 +1,5 @@
 """
-    Class that describes a store
+    Class that describes a Store
     Authors: David Rodriguez Fragoso, Erick Hernandez Silva
     Created: 18/10/2022
     Last update: 18/10/2022
