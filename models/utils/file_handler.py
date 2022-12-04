@@ -2,6 +2,10 @@ from __future__ import annotations
 from pathlib import Path
 
 
+def generate_csv_from(output_dir: str | Path, src_dir: str | Path) -> None:
+    pass
+
+
 def is_valid_path(path) -> bool:
     if isinstance(path, str) or isinstance(path, Path):
         return True

@@ -1,14 +1,15 @@
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 import numpy as np
 import tensorflow as tf
 from pathlib import Path
 from tensorflow import keras
 from keras import layers
 from keras.preprocessing.image import ImageDataGenerator
-from keras.applications.inception_v3 import InceptionV3
 from keras.applications.vgg16 import VGG16
-from keras.applications import Xception
-from keras.optimizers import RMSprop, Adam
+from keras.optimizers import Adam
 import utils.file_handler as fh
+import pandas as pd
 
 
 class Model:
@@ -21,6 +22,19 @@ class Model:
         self.__train_data, self.__test_data = self.__generate_data(self.__train_path, self.__validation_path, image_size)
         self.classes = fh.get_subdir_names_from(self.__train_path)
         self.model = self.__get_model((image_size[0], image_size[1], 3))
+        self.training_labels = self.__get_training_labels()
+
+    def __get_training_labels(self):
+        dataset = pd.DataFrame(columns=['filename', 'label'])
+        for child in self.__train_path.rglob('*'):
+            data = {'filename': '',
+                    'label': ''}
+            if child.is_file():
+                data['filename'] = child.absolute()
+                data['label'] = child.parent.name
+                dataset.loc[len(dataset)] = [data['filename'], data['label']]
+        print(dataset)
+        return dataset
 
     @staticmethod
     def __generate_data(train_path: str | Path, val_path: str | Path, image_size: tuple):
@@ -32,7 +46,7 @@ class Model:
         validation_data = test_gen.flow_from_directory(val_path, batch_size=10, class_mode='categorical', target_size=image_size)
         return train_data, validation_data
 
-    def __get_model(self, input_shape: tuple[int]) -> keras.Sequential:
+    def __get_model(self, input_shape: tuple) -> keras.Sequential:
         model = VGG16(include_top=False, input_shape=input_shape, weights='imagenet', classifier_activation='softmax')
         for layer in model.layers:
             layer.trainable = False
@@ -44,9 +58,10 @@ class Model:
         model.compile(optimizer=Adam(learning_rate=0.01), loss=keras.losses.CategoricalCrossentropy(from_logits=True), metrics=['acc'])
         print(model.summary())
         return model
-
-    def train_model(self, epochs: int):
-        history = self.model.fit(self.__train_data, validation_data=self.__test_data, steps_per_epoch=50, epochs=epochs)
+    
+    def train_model(self, epochs: int, save_path: Path):
+        history = self.model.fit(self.__train_data, validation_data=self.__test_data, epochs=epochs)
+        self.model.save(save_path)
         return history
 
     def predict_image(self, image_path: str | Path):
