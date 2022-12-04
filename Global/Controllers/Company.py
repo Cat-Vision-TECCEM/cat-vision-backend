@@ -1,11 +1,13 @@
-from flask import request
-from Global.Classes.Company import Company
 """
     Script that handles the received requests
     Authors: Erick Hernandez Silva, David Rodriguez Fragoso
     Created: 26/10/2022
     Last update: 26/10/2022
 """
+
+from flask import request
+from Global.Classes.Company import Company
+
 
 def create_company():
     """
@@ -16,7 +18,7 @@ def create_company():
 
     Parameters:
         * name: The name of the company
-        * email: Contact emailof the company
+        * email: Contact email of the company
 
     Format:
         * JSON
@@ -37,6 +39,22 @@ def create_company():
         return {'error': str(e)}, 400
 
 def get_companies():
+    """
+    Controller for the route /get-all
+
+    Method:
+        * GET
+
+    Parameters:
+        * Not required
+
+    Format:
+        * None
+
+    Returns:
+        * An exception or a 200 status
+    """
+
     try:
         return Company.get_all()
     except Exception as e:

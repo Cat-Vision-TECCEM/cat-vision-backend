@@ -4,6 +4,7 @@
     Created: 07/11/2022
     Last update: 07/11/2022
 """
+
 from flask import request
 from Global.Classes.Ticket import Ticket
 
@@ -13,19 +14,19 @@ def create_ticket():
     Controller for the route /create
 
     Method:
-    * POST
+        * POST
 
     Parameters:
-    * company_id: id of the company that created the ticket
-    * body: content of the ticket
-    * status: status of the ticket
-    * name: name of the client
+        * company_id: id of the company that created the ticket
+        * body: content of the ticket
+        * status: status of the ticket
+        * name: name of the client
 
     Format:
-    * JSON
+        * JSON
 
     Returns:
-    * An exception or a 200 status
+        * An exception or a 200 status
     """
 
     try:
@@ -47,16 +48,16 @@ def get_ticket():
     Controller for the route /get
 
     Method:
-    * GET
+        * GET
 
     Parameters:
-    * ticket_id: id of the desired ticket
+        * ticket_id: id of the desired ticket
 
     Format:
-    * QueryParams
+        * QueryParams
 
     Returns:
-    * An exception or a 200 status
+        * An exception or a 200 status
     """
 
     try:

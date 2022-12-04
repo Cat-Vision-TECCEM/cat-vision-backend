@@ -10,6 +10,22 @@ from Global.Classes.NUC import NUC
 
 
 def sendData():
+    """
+    Controller for the route /sendData
+
+    Method:
+        * POST
+
+    Parameters:
+        * A byte-array containing an encoded JSON
+
+    Format:
+        * RAW
+
+    Returns:
+        * An exception or a 200 status
+    """
+
     try:
         import json
         received_json = request.data.decode('utf-8')
@@ -21,6 +37,21 @@ def sendData():
         return {'error': str(e)}, 400
 
 def get_products():
+    """
+    Controller for the route /get-products
+
+    Method:
+        * POST
+
+    Parameters:
+        * company_id: numeric id of the company
+
+    Format:
+        * JSON
+
+    Returns:
+        * An exception or a 200 status
+    """
     try:
         company_id = request.json.get('company_id')
         return NUC.get_products(company_id)

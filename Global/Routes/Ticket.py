@@ -1,3 +1,10 @@
+"""
+    Routes created for the Ticket
+    Authors: Erick Hernandez Silva
+    Created: 24/10/2022
+    Last update: 04/12/2022
+"""
+
 from flask import Blueprint
 from Global.Controllers import Ticket as c
 

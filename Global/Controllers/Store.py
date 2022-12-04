@@ -4,7 +4,7 @@
     Created: 18/10/2022
     Last update: 18/10/2022
 """
-import re
+
 from flask import request
 from Global.Classes.Store import Store
 
@@ -14,23 +14,24 @@ def create_store():
     Controller for the route /create
 
     Method:
-    * POST
+        * POST
 
     Parameters:
-    * name: name of the store
-    * state: state where the store is located
-    * street: street where the store is located
-    * number: street number where the store is located
-    * city: city where store is located
-    * lat: latitude of the store location
-    * lng: longitude of the store location
+        * name: name of the store
+        * state: state where the store is located
+        * street: street where the store is located
+        * number: street number where the store is located
+        * city: city where store is located
+        * lat: latitude of the store location
+        * lng: longitude of the store location
 
     Format:
-    * JSON
+        * JSON
 
     Returns:
-    * An exception or a 200 status
+        * An exception or a 200 status
     """
+
     try:
         params = {
             'name': request.json.get('name'),
@@ -53,17 +54,18 @@ def get_store_products():
     Controller for the route /getProducts
 
     Method:
-    * GET
+        * GET
 
     Parameters:
-    * store_id: int - the id of the store we want to get the products
+        * store_id: int - the id of the store we want to get the products
 
     Format:
-    * QueryParams
+        * QueryParams
 
     Returns:
-    * An exception or a 200 status
+        * An exception or a 200 status
     """
+    
     try:
 
         store_id = request.args.get('store_id')

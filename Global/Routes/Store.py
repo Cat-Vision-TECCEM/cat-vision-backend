@@ -1,8 +1,10 @@
 """
-
+    Routes created for the Store
+    Authors: Erick Hernandez Silva
+    Created: 24/10/2022
+    Last update: 04/12/2022
 """
 
-from urllib import request
 from flask import Blueprint
 from Global.Controllers import Store as c
 
@@ -12,7 +14,7 @@ GLOBAL_STORE_BLUEPRINT = Blueprint('GLOBAL_STORE_BLUEPRINT', __name__)
 @GLOBAL_STORE_BLUEPRINT.route('/create', methods=['POST'])
 def createStore():
     """
-    Route used to create a new store in the databse
+    Route used to create a new store in the database
 
     Method:
     * POST
@@ -39,13 +41,13 @@ def createStore():
 @GLOBAL_STORE_BLUEPRINT.route('/getProducts', methods=['GET'])
 def getStoreProducts():
     """
-
+    Route used to load all the products of a store from the database
 
     Method:
     * GET
 
     Parameters:
-    *
+    *store_id: numeric id of the store
 
     Format:
     * QueryParams
@@ -59,7 +61,7 @@ def getStoreProducts():
 @GLOBAL_STORE_BLUEPRINT.route('/getAllStores', methods=['GET'])
 def getAllStores():
     """
-    Route used to load all the stores from the databse
+    Route used to load all the stores from the database
 
     Method:
     * GET
@@ -68,7 +70,7 @@ def getAllStores():
     * Not required
 
     Format:
-    * QueryParams
+    * None
 
     Returns:
     * An exception or a 200 status
@@ -78,7 +80,7 @@ def getAllStores():
 @GLOBAL_STORE_BLUEPRINT.route('/getAllProducts', methods=['GET'])
 def getAllProducts():
     """
-    Route used to get
+    Route used to load all the products from the database
 
     Method:
     * GET
@@ -87,7 +89,7 @@ def getAllProducts():
     * Not required
 
     Format:
-    * QueryParams
+    * None
 
     Returns:
     * An exception or a 200 status

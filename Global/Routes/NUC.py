@@ -2,10 +2,9 @@
     Routes created for the NUC/Client-side
     Authors: Erick Hernandez Silva
     Created: 24/10/2022
-    Last update: 24/10/2022
+    Last update: 04/12/2022
 """
 
-from urllib import request
 from flask import Blueprint
 from Global.Controllers import NUC as c
 
@@ -34,4 +33,19 @@ def sendData():
 
 @GLOBAL_NUC_BLUEPRINT.route('/get-products', methods=['POST'])
 def get_products():
+    """
+    Route used by the NUC to load all the products of a company from the database
+
+    Method:
+    * POST
+
+    Parameters:
+    * company_id: numeric id of the company
+
+    Format:
+    * JSON
+
+    Returns:
+    * An exception or a 200 status
+    """
     return c.get_products()
