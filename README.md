@@ -110,6 +110,7 @@ Ruta para crear una nueva orden.
 - company_id: id numérico de la compañía
 - store_id: id numérico de la tienda
 - products: una lista de diccionarios que contienen el id del producto y la cantidad
+- total: precio total de los productos
 
 **Formato:**
 
@@ -251,7 +252,7 @@ Ruta para crear una nueva tienda.
 - city: ciudad donde está localizada la tienda
 - lat: latitud de la localización de la tienda
 - lng: longitud de la localización de la tienda
-- password: contraseña para login
+- company_id: id numérico de la compañía
 
 **Formato:**
 
@@ -317,6 +318,7 @@ Ruta para crear un nuevo ticket.
 - body: contenido del ticket
 - status: estatus del ticket
 - name: nombre del cliente
+- username: usuario del cliente que creó el ticket
 
 **Formato:**
 
